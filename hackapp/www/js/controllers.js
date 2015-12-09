@@ -71,7 +71,7 @@ angular.module('starter.controllers', [])
   .success(function(data)
     {   
       $log.debug("User has already logged in.");
-      $state.go('appintro');
+      $state.go('tab.orders');
   })
   .error(function(data)
   {
@@ -85,5 +85,3 @@ angular.module('starter.controllers', [])
       $state.go('cert');
     };
 });
-
-
