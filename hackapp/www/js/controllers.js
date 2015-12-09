@@ -16,11 +16,13 @@ angular.module('starter.controllers', [])
 
   $scope.confirmBuy = function() {
     console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
+    var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
+    console.log(expiry);
     
-    // Orders.create({
-    //   vendor: $scope.selectedVendor,
-    //   timeout: $scope.selectedTime
-    // });
+    Orders.create({
+      vendor: $scope.selectedVendor,
+      expiry: expiry
+    });
   };
 
 })
