@@ -17,6 +17,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.selectTime = function(time) {
+    console.log('select time', time);
     selectedTime = time;
     $state.go('tab.buy');
   };
