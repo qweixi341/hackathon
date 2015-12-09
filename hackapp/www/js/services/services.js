@@ -111,11 +111,11 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('Orders', function($firebase) {
+.factory('Orders', function($firebaseArray) {
 
   var endPoint = "https://kopiteh.firebaseio.com/";
-  var ref = new FireBase(endPoint);
-  var orders = $firebase(ref.child('orders')).$asArray();
+  var ref = new Firebase(endPoint);
+  var orders = $firebaseArray(ref.child('orders'));
 
   return {
     all: orders,
@@ -125,7 +125,7 @@ angular.module('starter.services', [])
     },
 
     get: function (orderId) {
-      return $firebase(ref.child('orders').child(orderId)).$asObject();
+      return $firebaseArray(ref.child('orders').child(orderId)).$asObject();
     },
 
     delete: function (orderId) {
@@ -135,53 +135,53 @@ angular.module('starter.services', [])
 
 })
 
-.factory('Orders', function() {
-  // Might use a resource here that returns a JSON array
-  // Below data would be extend after grabbing from Firebase
+// .factory('Orders', function() {
+//   // Might use a resource here that returns a JSON array
+//   // Below data would be extend after grabbing from Firebase
 
-  //for deployment and firebase, the first would be reserved for user orders
-  // Some fake testing data
-  var orders = [{
-    id: 0,
-    name: 'This is username',
-    lastText: 'Current bids: 4',
-    face: 'img/YaKun.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/sumosalad.jpg'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/starbucks.png'
-  }, {
-    id: 4,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/SoupSpoon.png'
-  }, {
-    id: 5,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/SaladStop.jpg'
-  }];
+//   //for deployment and firebase, the first would be reserved for user orders
+//   // Some fake testing data
+//   var orders = [{
+//     id: 0,
+//     name: 'This is username',
+//     lastText: 'Current bids: 4',
+//     face: 'img/YaKun.png'
+//   }, {
+//     id: 1,
+//     name: 'Max Lynx',
+//     lastText: 'Hey, it\'s me',
+//     face: 'img/sumosalad.jpg'
+//   }, {
+//     id: 2,
+//     name: 'Adam Bradleyson',
+//     lastText: 'I should buy a boat',
+//     face: 'img/starbucks.png'
+//   }, {
+//     id: 4,
+//     name: 'Adam Bradleyson',
+//     lastText: 'I should buy a boat',
+//     face: 'img/SoupSpoon.png'
+//   }, {
+//     id: 5,
+//     name: 'Adam Bradleyson',
+//     lastText: 'I should buy a boat',
+//     face: 'img/SaladStop.jpg'
+//   }];
 
-  return {
-    all: function() {
-      return orders;
-    },
-    remove: function(order) {
-      orders.splice(orders.indexOf(order), 1);
-    },
-    get: function(orderId) {
-      for (var i = 0; i < orders.length; i++) {
-        if (orders[i].id === parseInt(orderId)) {
-          return orders[i];
-        }
-      }
-      return null;
-    }
-  };
-});
+//   return {
+//     all: function() {
+//       return orders;
+//     },
+//     remove: function(order) {
+//       orders.splice(orders.indexOf(order), 1);
+//     },
+//     get: function(orderId) {
+//       for (var i = 0; i < orders.length; i++) {
+//         if (orders[i].id === parseInt(orderId)) {
+//           return orders[i];
+//         }
+//       }
+//       return null;
+//     }
+//   };
+// });
