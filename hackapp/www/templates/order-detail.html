@@ -4,11 +4,29 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{chat.name}}">
+<div ng-init="comments = [
+{name:'John', comment:'Coffee a'},
+{name:'Jessie', comment:'Coffed b'},
+{name:'Johanna', comment:'Coffe c'},
+{name:'Joy', comment:'Coffee d'},
+{name:'Mary', comment:'Coffee e'},
+{name:'Peter', comment:'Coffee f'},
+{name:'Sebastian', comment:'Coffee g'}
+]">
+<ion-view view-title="{{order.name}}">
   <ion-content class="padding">
-    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{chat.lastText}}
-    </p>
+  <img ng-src="{{order.face}}" style="width: 64px; height: 64px">
+  <ion-list>
+    <ion-item ng-repeat="comment in comments ">
+      {{comment.name}} : {{comment.comment}}!
+    </ion-item>
+  </ion-list>
+  <label class="item item-input">
+    <input type="text" placeholder="Add your comment here" ng-model="customerComment"required>
+    <form ng-submit="addListItem(customerComment)" name="customerCommentForm">
+    <button class="button button-small" ng-disabled="customerCommentForm.$invalid">
+      submit
+    </button>
+  </label>
   </ion-content>
 </ion-view>
