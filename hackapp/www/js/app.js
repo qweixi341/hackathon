@@ -44,16 +44,16 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'tab-orders': {
         templateUrl: 'templates/tab-orders.html',
-        controller: 'ChatsCtrl'
+        controller: 'OrdersCtrl'
       }
     }
   })
   .state('tab.order-detail', {
-    url: '/orders/:chatId',
+    url: '/orders/:orderId',
     views: {
       'tab-orders': {
         templateUrl: 'templates/order-detail.html',
-        controller: 'ChatDetailCtrl'
+        controller: 'OrderDetailCtrl'
       }
     }
   })

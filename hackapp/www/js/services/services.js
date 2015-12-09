@@ -60,12 +60,13 @@ angular.module('starter.services', [])
 
 })
 
-.factory('Chats', function() {
+.factory('Orders', function() {
   // Might use a resource here that returns a JSON array
   // Below data would be extend after grabbing from Firebase
 
   //for deployment and firebase, the first would be reserved for user orders
-  var chats = [{
+  // Some fake testing data
+  var orders = [{
     id: 0,
     name: 'This is username',
     lastText: 'Current bids: 4',
@@ -94,15 +95,15 @@ angular.module('starter.services', [])
 
   return {
     all: function() {
-      return chats;
+      return orders;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    remove: function(order) {
+      orders.splice(orders.indexOf(order), 1);
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(orderId) {
+      for (var i = 0; i < orders.length; i++) {
+        if (orders[i].id === parseInt(orderId)) {
+          return orders[i];
         }
       }
       return null;

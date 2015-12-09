@@ -4,23 +4,20 @@
       <div class="item item-divider">
           My Ordering
       </div>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#/tab/orders/{{chats[0].id}}">
-        <img ng-src="{{chats[0].face}}">
-        <h2>{{chats[0].name}}</h2>
-        <p>{{chats[0].lastText}}</p>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#/tab/orders/{{orders[0].id}}">
+        <img ng-src="{{orders[0].face}}">
+        <h2>{{orders[0].name}}</h2>
+        <p>{{orders[0].lastText}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>        
       </ion-item>
       <div class="item item-divider">
           Current Orderings
       </div>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/orders/{{chat.id}}" ng-if="$index > 0">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="order in orders" type="item-text-wrap" href="#/tab/orders/{{order.id}}" ng-if="$index > 0">
+        <img ng-src="{{order.face}}">
+        <h2>{{order.name}}</h2>
+        <p>{{order.lastText}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>        
       </ion-item>
     </ion-list>
   </ion-content>
