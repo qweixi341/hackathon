@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
   .success(function(data)
     {   
       $log.debug("User has already logged in.");
-      $state.go('appintro');
+      $state.go('tab.orders');
   })
   .error(function(data)
   {
@@ -61,9 +61,6 @@ angular.module('starter.controllers', [])
         loginService.loginUser($scope.data.username, $scope.data.password);
     };
     
-    $scope.rrCert = function() {
-      $state.go('cert');
-    };
 })
 
 
