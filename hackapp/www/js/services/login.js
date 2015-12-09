@@ -13,7 +13,7 @@ angular.module('starter.services')
 	            	console.log(data);
 	            	localStorageService.set('__username', name);
 		    		localStorageService.set('__JWT', data.returnData.JWT);		            
-	            	$state.go('appintro');
+	            	$state.go('tab.orders');
 	        	})
 	        	.error(function(data)
 	        	{

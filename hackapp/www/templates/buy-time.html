@@ -1,5 +1,9 @@
-<ion-view view-title="Buy">
-  <ion-content class="padding">
-    Select Time page
+<ion-view view-title="Time">
+  <ion-content >
+    Your offer will expire in
+    <ion-radio ng-model="choice" ng-change="selectTime(60)" ng-value="'A'">60 mins</ion-radio>
+    <ion-radio ng-model="choice" ng-change="selectTime(45)" ng-value="'B'">45 mins</ion-radio>
+    <ion-radio ng-model="choice" ng-change="selectTime(30)" ng-value="'C'">30 mins</ion-radio>
+    <ion-radio ng-model="choice" ng-change="selectTime(15)" ng-value="'D'">15 mins</ion-radio>
   </ion-content>
 </ion-view>

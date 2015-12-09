@@ -4,14 +4,30 @@ angular.module('starter.services', [])
   var vendors = [
     {
       id: 0,
-      name: 'TuckShop',
-      thumbnail: 'img/some.png'
+      name: 'SaladStop',
+      thumbnail: 'img/SaladStop.jpg'
     },
     {
       id: 1,
       name: 'Starbucks',
       thumbnail: 'img/starbucks.png'
-    }
+    },
+    {
+      id: 2,
+      name: 'Ya Kun 亚坤',
+      thumbnail: 'img/YaKun.png'
+    },
+    {
+      id: 3,
+      name: 'The Soup Spoon',
+      thumbnail: 'img/SoupSpoon.png'
+    },    
+    {
+      id: 4,
+      name: 'Sumo Salad',
+      thumbnail: 'img/sumosalad.jpg'
+    }   
+
   ];
   return {
     all: function() {
