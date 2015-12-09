@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
-});
+})
 
 .controller('DashCtrl', function($scope) {})
 
@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
-});
+})
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
     $scope.data = {};    
