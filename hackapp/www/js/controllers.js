@@ -80,4 +80,4 @@ angular.module('starter.controllers', [])
   $scope.login = function() {     
       loginService.loginUser($scope.data.username, $scope.data.password);
   };
-});
+})
