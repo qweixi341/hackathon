@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
-});
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
-});
+})
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
     $scope.data = {};    
@@ -64,6 +64,6 @@ angular.module('starter.controllers', [])
     $scope.rrCert = function() {
       $state.go('cert');
     };
-})
+});
 
 
