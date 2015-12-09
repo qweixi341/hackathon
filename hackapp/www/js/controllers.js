@@ -1,6 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('BuyCtrl', function($scope, $state, Vendors) {
+
+  // var hasPendingOrder = localStorageService.get('hasPendingOrder');
+  // if(hasPendingOrder) {
+  //   $state.go('tab/buy/summary');
+  // }
+  $scope.vendors = Vendors.all();
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
