@@ -4,7 +4,7 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<div ng-init="comments = [
+<div ng-init="users = [
 {name:'John', comment:'Coffee a'},
 {name:'Jessie', comment:'Coffed b'},
 {name:'Johanna', comment:'Coffe c'},
@@ -17,14 +17,14 @@
   <ion-content class="padding">
   <img ng-src="{{order.face}}" style="width: 64px; height: 64px">
   <ion-list>
-    <ion-item ng-repeat="comment in comments ">
-      {{comment.name}} : {{comment.comment}}!
+    <ion-item ng-repeat="user in users ">
+      {{user.name}} : {{user.comment}}!
     </ion-item>
   </ion-list>
   <label class="item item-input">
-    <input type="text" placeholder="Add your comment here" ng-model="customerComment"required>
-    <form ng-submit="addListItem(customerComment)" name="customerCommentForm">
-    <button class="button button-small" ng-disabled="customerCommentForm.$invalid">
+    <input type="text" placeholder="Add your comment here" ng-model="UserComment"required>
+    <form ng-submit="addListItem(UserComment)" name="UserCommentForm">
+    <button class="button button-small" ng-disabled="UserCommentForm.$invalid">
       submit
     </button>
   </label>
