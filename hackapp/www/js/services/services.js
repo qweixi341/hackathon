@@ -29,17 +29,17 @@ angular.module('starter.services', [])
     },
     {
       id: 5,
-      name: 'apples&oranges',
+      name: 'Apples&oranges',
       thumbnail: 'img/apples&oranges.jpg'
     }, 
     {
       id: 6,
-      name: 'bakersfield',
+      name: 'Bakersfield',
       thumbnail: 'img/bakersfield.jpg'
     },
     {
       id: 7,
-      name: 'bread yard',
+      name: 'Bread yard',
       thumbnail: 'img/bread yard.jpg'
     },
     {
@@ -93,6 +93,17 @@ angular.module('starter.services', [])
       thumbnail: 'img/The Daily Cut.jpg'
     },             
   ];
+
+  vendors.sort(function(a, b){
+    var nameA=a.name.toLowerCase();
+    var nameB=b.name.toLowerCase();
+    if (nameA < nameB) //sort string ascending
+      return -1 
+    if (nameA > nameB)
+      return 1
+    return 0 //default return value (no sorting)
+    });
+
   return {
     all: function() {
       return vendors;
