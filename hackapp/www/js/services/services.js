@@ -20,6 +20,22 @@ angular.module('starter.services', [])
   };
 })
 
+.factory('Orders', function($firebase) {
+
+  var endPoint = "https://kopiteh.firebaseio.com/";
+  var ref = new FireBase(endPoint);
+  
+  return {
+    made: function(object) {
+      ref.set(object);
+    },
+
+    all: function() {
+      return $firebase(ref.limitToLast(10)).$asArray();
+    }
+  }
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
