@@ -1,5 +1,12 @@
 angular.module('starter.controllers', [])
 
+.config(function($ionicConfigProvider) {
+  $ionicConfigProvider.views.maxCache(5);
+  $ionicConfigProvider.tabs.position('bottom');
+  $ionicConfigProvider.navBar.alignTitle('center');
+  $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
+});
+
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
@@ -26,3 +33,29 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
 });
+
+.controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
+    $scope.data = {};    
+    //un-comment below to enable debug mode.
+    //$state.go('tab.scan');
+    var _JWT = localStorageService.get('__JWT');     
+    jwtParserService.parseJWTclaim(_JWT)    
+  .success(function(data)
+    {   
+      $log.debug("User has already logged in.");
+      $state.go('appintro');
+  })
+  .error(function(data)
+  {
+        $log.debug("No User record found. Proceed with login.");
+  });
+    $scope.login = function() {     
+        loginService.loginUser($scope.data.username, $scope.data.password);
+    };
+    
+    $scope.rrCert = function() {
+      $state.go('cert');
+    };
+})
+
+
