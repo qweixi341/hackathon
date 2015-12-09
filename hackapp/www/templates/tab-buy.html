@@ -3,19 +3,21 @@
     <ion-list>
         <ion-item 
           class="item-remove-animate item-avatar item-icon-right" 
-          type="item-text-wrap" href="#/tab/buy/vendors">
-          <h2>Which store to go?</h2>
+          type="item-text-wrap" ng-click="goBuyVendors()">
+          <h2>Select Vendor</h2>
+          <p>{{selectedVendor}}</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
         <ion-item 
           class="item-remove-animate item-avatar item-icon-right" 
-          type="item-text-wrap" href="#/tab/buy/time">
-          <h2>Departing in</h2>
+          type="item-text-wrap" ng-click="goBuyTime()">
+          <h2>Select Time</h2>
+          <p>{{selectedTime}}</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
 
       </ion-list>
-      <button class="button button-block button-positive">
+      <button ng-click="confirmBuy()" class="button button-block button-positive">
         Confirm
       </button>
   </ion-content>
