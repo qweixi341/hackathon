@@ -32,7 +32,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -63,7 +63,35 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'tab-buy': {
         templateUrl: 'templates/tab-buy.html',
-        controller: 'DashCtrl'
+        controller: 'BuyCtrl'
+      }
+    }
+  })
+  .state('tab.buy-vendors', {
+    url: '/buy/vendors',
+    views: {
+      'tab-buy': {
+        templateUrl: 'templates/buy-vendors.html',
+        controller: 'BuyCtrl'
+      }
+    }
+  })
+  .state('tab.buy-time', {
+    url: '/buy/time',
+    views: {
+      'tab-buy': {
+        templateUrl: 'templates/buy-time.html',
+        controller: 'BuyCtrl'
+      }
+    }
+  })
+
+  .state('tab.buy-summary', {
+    url: '/buy/summary',
+    views: {
+      'tab-buy': {
+        templateUrl: 'templates/buy-summary.html',
+        controller: 'BuyCtrl'
       }
     }
   })
