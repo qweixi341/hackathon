@@ -39,47 +39,46 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
   })
 
   // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.orders', {
+    url: '/orders',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+      'tab-orders': {
+        templateUrl: 'templates/tab-orders.html',
+        controller: 'ChatsCtrl'
+      }
+    }
+  })
+  .state('tab.order-detail', {
+    url: '/orders/:chatId',
+    views: {
+      'tab-orders': {
+        templateUrl: 'templates/order-detail.html',
+        controller: 'ChatDetailCtrl'
+      }
+    }
+  })
+
+  .state('tab.buy', {
+    url: '/buy',
+    views: {
+      'tab-buy': {
+        templateUrl: 'templates/tab-buy.html',
         controller: 'DashCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.summary', {
+    url: '/summary',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+      'tab-summary': {
+        templateUrl: 'templates/tab-summary.html',
         controller: 'AccountCtrl'
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/chats');
+  $urlRouterProvider.otherwise('/tab/orders');
 
 });
