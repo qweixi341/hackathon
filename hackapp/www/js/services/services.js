@@ -26,8 +26,72 @@ angular.module('starter.services', [])
       id: 4,
       name: 'Sumo Salad',
       thumbnail: 'img/sumosalad.jpg'
-    }   
-
+    },
+    {
+      id: 5,
+      name: 'apples&oranges',
+      thumbnail: 'img/apples&oranges.jpg'
+    }, 
+    {
+      id: 6,
+      name: 'bakersfield',
+      thumbnail: 'img/bakersfield.jpg'
+    },
+    {
+      id: 7,
+      name: 'bread yard',
+      thumbnail: 'img/bread yard.jpg'
+    },
+    {
+      id: 8,
+      name: 'Chillas',
+      thumbnail: 'img/Chillas.jpg'
+    },
+    {
+      id: 9,
+      name: 'Coffee Hive',
+      thumbnail: 'img/Coffee Hive.jpg'
+    },               
+    {
+      id: 10,
+      name: 'Coffee&Toast',
+      thumbnail: 'img/Coffee&Toast.jpg'
+    },
+    {
+      id: 11,
+      name: 'D Pastriez',
+      thumbnail: 'img/D Pastriez.jpg'
+    }, 
+    {
+      id: 12,
+      name: 'Green Croft',
+      thumbnail: 'img/Green Croft.jpg'
+    },
+    {
+      id: 13,
+      name: 'Kettle Pot',
+      thumbnail: 'img/Kettle Pot.jpg'
+    },
+    {
+      id: 14,
+      name: 'Mixed Grill',
+      thumbnail: 'img/Mixed Grill.jpg'
+    },
+    {
+      id: 15,
+      name: 'One Man Coffee',
+      thumbnail: 'img/One Man Coffee.jpg'
+    },
+    {
+      id: 16,
+      name: 'PitaPit',
+      thumbnail: 'img/PitaPit.jpg'
+    },
+    {
+      id: 17,
+      name: 'The Daily Cut',
+      thumbnail: 'img/The Daily Cut.jpg'
+    },             
   ];
   return {
     all: function() {
