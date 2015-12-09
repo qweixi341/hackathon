@@ -63,11 +63,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
-    $scope.data = {};    
-    //un-comment below to enable debug mode.
-    //$state.go('tab.scan');
-    var _JWT = localStorageService.get('__JWT');     
-    jwtParserService.parseJWTclaim(_JWT)    
+  $scope.data = {};    
+  //un-comment below to enable debug mode.
+  //$state.go('tab.scan');
+  var _JWT = localStorageService.get('__JWT');     
+  jwtParserService.parseJWTclaim(_JWT)    
   .success(function(data)
     {   
       $log.debug("User has already logged in.");
@@ -77,11 +77,7 @@ angular.module('starter.controllers', [])
   {
         $log.debug("No User record found. Proceed with login.");
   });
-    $scope.login = function() {     
-        loginService.loginUser($scope.data.username, $scope.data.password);
-    };
-    
-    $scope.rrCert = function() {
-      $state.go('cert');
-    };
+  $scope.login = function() {     
+      loginService.loginUser($scope.data.username, $scope.data.password);
+  };
 });
