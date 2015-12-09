@@ -1,12 +1,23 @@
 <ion-view view-title="Orders">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/orders/{{chat.id}}">
+      <div class="item item-divider">
+          My Ordering
+      </div>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#/tab/orders/{{chats[0].id}}">
+        <img ng-src="{{chats[0].face}}">
+        <h2>{{chats[0].name}}</h2>
+        <p>{{chats[0].lastText}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>        
+      </ion-item>
+      <div class="item item-divider">
+          Current Orderings
+      </div>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/orders/{{chat.id}}" ng-if="$index > 0">
         <img ng-src="{{chat.face}}">
         <h2>{{chat.name}}</h2>
         <p>{{chat.lastText}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
-
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
           Delete
         </ion-option-button>

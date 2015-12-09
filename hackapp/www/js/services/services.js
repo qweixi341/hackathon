@@ -62,33 +62,34 @@ angular.module('starter.services', [])
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
+  // Below data would be extend after grabbing from Firebase
 
-  // Some fake testing data
+  //for deployment and firebase, the first would be reserved for user orders
   var chats = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
+    name: 'This is username',
+    lastText: 'Current bids: 4',
+    face: 'img/YaKun.png'
   }, {
     id: 1,
     name: 'Max Lynx',
     lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
+    face: 'img/sumosalad.jpg'
   }, {
     id: 2,
     name: 'Adam Bradleyson',
     lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
+    face: 'img/starbucks.png'
   }, {
     id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
+    name: 'Adam Bradleyson',
+    lastText: 'I should buy a boat',
+    face: 'img/SoupSpoon.png'
+  }, {
+    id: 5,
+    name: 'Adam Bradleyson',
+    lastText: 'I should buy a boat',
+    face: 'img/SaladStop.jpg'
   }];
 
   return {
