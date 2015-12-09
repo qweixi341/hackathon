@@ -6,18 +6,22 @@ angular.module('starter.controllers', [])
   // if(hasPendingOrder) {
   //   $state.go('tab/buy/summary');
   // }
-  var selectedVendor;
-  var selectedTime;
+  $scope.selectedVendor;
+  $scope.selectedTime;
+  var returnVendor;
 
   $scope.vendors = Vendors.all();
 
-  $scope.selectVendor = function(id) {
-    selectedVendor = id;
+  $scope.selectVendor = function(name) {
+    console.log('select vendor', name);
+    $scope.selectedVendor = name;
     $state.go('tab.buy');
+    // $item-content = name;
   };
 
+
   $scope.selectTime = function(time) {
-    selectedTime = time;
+    $scope.selectedTime = time;
     $state.go('tab.buy');
   };
 
