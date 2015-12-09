@@ -1,0 +1,31 @@
+<ion-view hide-nav-bar="true" title="User Login" class="login_pane">
+	<ion-content padding="true">
+		<h1 class= "login_h1">
+		<lable>
+			Autodesk Library
+		</lable></h1>
+		<div class="list login_list">
+			<label class="item item-input item-floating-label login_item"> <span class="input-label login_input-label">ADS Account :</span>
+				<input type="text" placeholder="ADS Account" ng-model="data.username" required>
+			</label>
+			<label class="item item-input item-floating-label login_item"> <span class="input-label login_input-label">Password :</span>
+				<input type="password" placeholder="Password" ng-model="data.password" required>
+			</label>
+			<button class="button button-dark button-positive login_button" ng-click="login()">
+				Login
+			</button>
+		</div>
+		
+	</ion-content>
+	<ion-footer-bar class="bar-calm">
+		<div class="buttons" ng-click="rrCert()">
+			<button class="button button-large button-calm">
+			 Site_Certificate
+			</button>
+		</div>
+		<div class="logo_wrapper">
+		<img id="logo_autodesk" src="img/logo.png">
+		</div>
+		
+	</ion-footer-bar>
+</ion-view>
