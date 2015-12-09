@@ -1,13 +1,21 @@
 angular.module('starter.controllers', [])
 
+.controller('BuyCtrl', function($scope, $state, Vendors) {
+
+  // var hasPendingOrder = localStorageService.get('hasPendingOrder');
+  // if(hasPendingOrder) {
+  //   $state.go('tab/buy/summary');
+  // }
+  $scope.vendors = Vendors.all();
+
+})
+
 .config(function($ionicConfigProvider) {
   $ionicConfigProvider.views.maxCache(5);
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 });
-
-.controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
