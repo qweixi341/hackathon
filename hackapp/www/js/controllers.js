@@ -6,19 +6,27 @@ angular.module('starter.controllers', [])
   // if(hasPendingOrder) {
   //   $state.go('tab/buy/summary');
   // }
-  var selectedVendor;
-  var selectedTime;
+  $scope.selectedVendor;
+  $scope.selectedTime;
+  var returnVendor;
 
   $scope.vendors = Vendors.all();
 
-  $scope.selectVendor = function(id) {
-    selectedVendor = id;
+  $scope.selectVendor = function(name) {
+    console.log('select vendor', name);
+    $scope.selectedVendor = name;
     $state.go('tab.buy');
+    // $item-content = name;
   };
 
+
   $scope.selectTime = function(time) {
+<<<<<<< HEAD
     console.log('select time', time);
     selectedTime = time;
+=======
+    $scope.selectedTime = time;
+>>>>>>> 28797fb3a01be660335d40e25d45b69b9138a904
     $state.go('tab.buy');
   };
 
@@ -81,4 +89,4 @@ angular.module('starter.controllers', [])
   $scope.login = function() {     
       loginService.loginUser($scope.data.username, $scope.data.password);
   };
-});
+})
