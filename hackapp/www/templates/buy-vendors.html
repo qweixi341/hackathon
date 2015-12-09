@@ -1,5 +1,10 @@
 <ion-view view-title="Buy">
-  <ion-content class="padding">
-    Select Vendor page
+  <ion-content>
+   <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="vendor in vendors" type="item-text-wrap">
+        <a>{{vendor.name}}</a>
+        <img class='vendor' ng-src="{{vendor.thumbnail}}">
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
