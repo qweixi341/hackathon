@@ -96,11 +96,11 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
 
-  .state('tab.summary', {
-    url: '/summary',
+  .state('tab.info', {
+    url: '/info',
     views: {
-      'tab-summary': {
-        templateUrl: 'templates/tab-summary.html',
+      'tab-info': {
+        templateUrl: 'templates/tab-info.html',
         controller: 'AccountCtrl'
       }
     }

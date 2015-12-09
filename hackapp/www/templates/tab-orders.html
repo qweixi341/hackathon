@@ -13,7 +13,10 @@
       <div class="item item-divider">
           Current Orderings
       </div>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="order in orders" type="item-text-wrap" href="#/tab/orders/{{order.id}}" ng-if="$index > 0">
+      <div class="bar bar-header item-input-inset">
+          <ion-search placeholder="Search for your interested orders" filter="search"></ion-search>
+      </div>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="order in orders | filter:search.value" type="item-text-wrap" href="#/tab/orders/{{order.id}}">
         <img ng-src="{{order.face}}">
         <h2>{{order.name}}</h2>
         <p>{{order.lastText}}</p>
