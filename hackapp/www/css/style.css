@@ -1,3 +1,4 @@
+
 /* Your app's CSS, go crazy, make it your own */
 
 
@@ -53,7 +54,6 @@
 
 
 body {
-  cursor: url('http://ionicframework.com/img/finger.png'), auto;
 }
 
 .bar.item-input-inset .item-input-wrapper input {
@@ -235,4 +235,18 @@ ion-scroll.nobgcolor {
 
 .button.ng-hide{
   display:none;
+}
+/* Empty. Add your own CSS if you like */
+.vendor {
+	/*vertical-align: text-top;*/
+	float: right;
+	height: 50px;
+	/*text-align: right;*/
+	position: relative;
+
+}
+
+.vendor_name_list{
+
+
 }
