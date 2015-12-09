@@ -64,10 +64,16 @@ angular.module('starter.controllers', [])
   $scope.order = Orders.get($stateParams.orderId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+.controller('AccountCtrl', function($scope,localStorageService) {
+
+  $scope.owner = localStorageService.get('__username');
+  $scope.getSeat = localStorageService.get('__seat');
+
+  $scope.seat = function(seat){
+    localStorageService.set('__seat');
+    $scope.seat = seat;
   };
+  
 })
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
