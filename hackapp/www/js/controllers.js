@@ -1,10 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($scope, $state, $stateParams) {
+.controller('BuyCtrl', function($scope, $state, $stateParams, Orders) {
 
   console.log('refresh');
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
+  $scope.selectedTimeDisplay = $stateParams.timeout ? 'In ' + $stateParams.timeout + ' minutes' : '';
 
   $scope.goBuyVendors = function() {
     $state.go('tab.buy-vendors', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
@@ -14,7 +15,12 @@ angular.module('starter.controllers', [])
   };
 
   $scope.confirmBuy = function() {
-    console.log($scope.selectedVendor, '+', $scope.selectedTime);
+    console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
+    
+    // Orders.create({
+    //   vendor: $scope.selectedVendor,
+    //   timeout: $scope.selectedTime
+    // });
   };
 
 })
