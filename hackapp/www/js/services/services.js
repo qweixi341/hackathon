@@ -24,16 +24,24 @@ angular.module('starter.services', [])
 
   var endPoint = "https://kopiteh.firebaseio.com/";
   var ref = new FireBase(endPoint);
-  
+  var orders = $firebase(ref.child('orders')).$asArray();
+
   return {
-    made: function(object) {
-      ref.set(object);
+    all: orders,
+    
+    create: function (order) {
+      return orders.$add(order);
     },
 
-    all: function() {
-      return $firebase(ref.limitToLast(10)).$asArray();
+    get: function (orderId) {
+      return $firebase(ref.child('orders').child(orderId)).$asObject();
+    },
+
+    delete: function (orderId) {
+      return orders.$remove(orderId);
     }
-  }
+  };
+
 })
 
 .factory('Chats', function() {
