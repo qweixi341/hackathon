@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
   })
 
   .state('tab.buy', {
-    url: '/buy',
+    url: '/buy?vendor&timeout',
     views: {
       'tab-buy': {
         templateUrl: 'templates/tab-buy.html',
@@ -68,20 +68,20 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
   .state('tab.buy-vendors', {
-    url: '/buy/vendors',
+    url: '/buy/vendors/:timeout',
     views: {
       'tab-buy': {
         templateUrl: 'templates/buy-vendors.html',
-        controller: 'BuyCtrl'
+        controller: 'VendorCtrl'
       }
     }
   })
   .state('tab.buy-time', {
-    url: '/buy/time',
+    url: '/buy/time/:vendor',
     views: {
       'tab-buy': {
         templateUrl: 'templates/buy-time.html',
-        controller: 'BuyCtrl'
+        controller: 'TimeoutCtrl'
       }
     }
   })

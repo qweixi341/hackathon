@@ -1,33 +1,41 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($scope, $state, Vendors) {
+.controller('BuyCtrl', function($scope, $state, $stateParams) {
 
-  // var hasPendingOrder = localStorageService.get('hasPendingOrder');
-  // if(hasPendingOrder) {
-  //   $state.go('tab/buy/summary');
-  // }
-  var selectedVendor;
-  var selectedTime;
+  console.log('refresh');
+  $scope.selectedVendor = $stateParams.vendor;
+  $scope.selectedTime = $stateParams.timeout;
 
-  $scope.vendors = Vendors.all();
-
-  $scope.selectVendor = function(id) {
-    selectedVendor = id;
-    $state.go('tab.buy');
+  $scope.goBuyVendors = function() {
+    $state.go('tab.buy-vendors', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
   };
-
-  $scope.selectTime = function(time) {
-    selectedTime = time;
-    $state.go('tab.buy');
+  $scope.goBuyTime = function() {
+    $state.go('tab.buy-time', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
   };
 
   $scope.confirmBuy = function() {
-    if(typeof selectedTime === 'undefined'
-      || typeof selectedTime === 'undefined'){
-      return;
-    }
+    console.log($scope.selectedVendor, '+', $scope.selectedTime);
   };
 
+})
+
+.controller('VendorCtrl', function($scope, $state, $stateParams, Vendors) {
+
+  $scope.vendors = Vendors.all();
+
+  $scope.selectVendor = function(name) {
+    console.log('selectVendor, ', name);
+    $state.go('tab.buy', {vendor : name, timeout : $stateParams.timeout});
+  };
+})
+
+.controller('TimeoutCtrl', function($scope, $state, $stateParams) {
+
+  $scope.selectTime = function(time) {
+    $scope.selectedTime = time;
+    console.log('selectTime, ', time);
+    $state.go('tab.buy', {vendor : $stateParams.vendor, timeout : time});
+  };
 })
 
 .config(function($ionicConfigProvider) {
