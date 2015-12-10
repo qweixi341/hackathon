@@ -111,7 +111,6 @@ angular.module('starter.services', ['firebase'])
   };
 })
 
-<<<<<<< HEAD
 .factory('Orders', function(dbService, $log, $firebaseObject) {
   // Might use a resource here that returns a JSON array
   // Below data would be extend after grabbing from Firebase
