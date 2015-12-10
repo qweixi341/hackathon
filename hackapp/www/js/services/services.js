@@ -213,7 +213,7 @@ angular.module('starter.services', ['firebase'])
   //   });
 
   //   console.log("completed, ", allOrders, myOrders);
-  });
+  //});
   
 
   return {
