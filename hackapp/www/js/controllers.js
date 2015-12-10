@@ -219,6 +219,7 @@ angular.module('starter.controllers', [])
           var timeRemaining = moment($scope.order.ExpriyTime) - moment();
           var seconds = timeRemaining / 1000;
           if (seconds <= 0) {
+            $scope.eligible = false;
             $scope.timerString = 'Order Expired!';
           } else {
             var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
