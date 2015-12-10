@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrdersCtrl', function($scope, $ionicLoading, $timeout, Vendors, $state,
-  $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
+  $cordovaLocalNotification, $cordovaBadge, $ionicPlatform, localStorageService, dbService) {
 
   var _username = localStorageService.get("__username");
   $scope.myOrders = [];
@@ -95,7 +95,17 @@ angular.module('starter.controllers', [])
     }
   });
 
-  $ionicPlatform.ready(function () {       
+  $ionicPlatform.ready(function () {      
+    $cordovaBadge.promptForPermission();
+ 
+    $scope.setBadge = function(value) {
+            $cordovaBadge.hasPermission().then(function(result) {
+                $cordovaBadge.set(value);
+            }, function(error) {
+                alert(error);
+            });
+    }
+
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
         id: 1,
