@@ -47,9 +47,6 @@ angular.module('starter.controllers', [])
   //});
 
   $scope.orders = Orders.all();
-  $scope.remove = function(order) {
-    Orders.remove(order);
-  };
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, Orders) {
