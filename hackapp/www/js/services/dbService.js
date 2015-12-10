@@ -5,8 +5,6 @@ angular.module('starter.services')
     	  //get an object from firebase
         getAllOrders: function() 
         {
-
-          $log.debug("We are here");
         	var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
           var returnObj = $firebaseObject(ref);
           var deferred = $q.defer();
@@ -24,9 +22,7 @@ angular.module('starter.services')
         }, 
         getOrderdetail: function(id) 
         {
-
-          $log.debug("We are here");
-          var ref = new Firebase("https://kopiteh.firebaseio.com/orders/" + id);  
+          var ref = new Firebase("https://kopiteh.firebaseio.com/orders/" + id + "/Bids");  
           var returnObj = $firebaseObject(ref);
           var deferred = $q.defer();
           try {
@@ -51,12 +47,10 @@ angular.module('starter.services')
        },
        setBids: function(firebaseParams) 
        {
-          $log.debug("We are now setting Bids.");
           var oder_id = firebaseParams[0];
           var bids_id = firebaseParams[1];
           var params = firebaseParams[2];
           var completeURL = "https://kopiteh.firebaseio.com/orders/" + oder_id + "/Bids" + "/" + bids_id;
-          $log.debug(completeURL);
           var ref = new Firebase(completeURL);  
           ref.update(params);    
           //$log.debug(returnObj[Bids].length);

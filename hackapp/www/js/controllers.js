@@ -63,6 +63,7 @@ angular.module('starter.controllers', [])
   //});
 
   $scope.orders = Orders.all();
+  $scope.myorders = Orders.getMyOrder();
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, Orders) {
