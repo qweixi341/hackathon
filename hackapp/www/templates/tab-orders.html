@@ -1,30 +1,32 @@
 <ion-view view-title="Orders">
   <ion-pane>
   <ion-content>
-    <ion-refresher
-        pulling-text="Pull to refresh..."
-        on-refresh="refreshOrders(true)">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="refreshOrders(true)">
     </ion-refresher>
     <ion-list>
-      <div class="item item-divider">
-          My Order
-      </div>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="order in myorders" type="item-text-wrap" href="#/tab/orders/{{order.id}}">
-        <img ng-src="{{order.face}}">
-        <h2>{{order.name}}</h2>
-        <p>{{order.lastText}}</p>
+      <div class="item item-divider">My Order</div>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" 
+                ng-repeat="order in myOrders" 
+                type="item-text-wrap" 
+                href="#/tab/orders/{{order.ID}}">
+        <img ng-src="{{getVendorThumbnail(order.Vendor)}}">
+        <h2>{{order.Init}}</h2>
+        <p>{{order.Vendor}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>        
       </ion-item>
-      <div class="item item-divider">
-          Active Orders
-      </div>
+
+      <div class="item item-divider">Active Orders</div>
       <div class="bar bar-header item-input-inset">
-          <ion-search placeholder="Search for your interested orders" filter="search"></ion-search>
+        <ion-search placeholder="Search for your interested orders" filter="search"></ion-search>
       </div>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="order in orders | filter:search.value" type="item-text-wrap" href="#/tab/orders/{{order.id}}">
-        <img ng-src="{{order.face}}">
-        <h2>{{order.name}}</h2>
-        <p>{{order.lastText}}</p>
+
+      <ion-item class="item-remove-animate item-avatar item-icon-right" 
+                ng-repeat="order in orders | filter:search.value"          
+                type="item-text-wrap" 
+                href="#/tab/orders/{{order.ID}}">
+        <img ng-src="{{getVendorThumbnail(order.Vendor)}}">
+        <h2>{{order.Init}}</h2>
+        <p>{{order.Vendor}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>        
       </ion-item>
     </ion-list>

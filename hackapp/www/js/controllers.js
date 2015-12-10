@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, Orders, dbService, localStorageService) {
+.controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, dbService, localStorageService) {
 
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
@@ -16,8 +16,7 @@ angular.module('starter.controllers', [])
   $scope.confirmBuy = function() {
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
     console.log(expiry);    
-    _init = localStorageService.get("__username");
-
+    _init = localStorageService.get("__username")
     $log.debug(_init);
     dbService.getAllOrdersID().then(function(data) {  
       _addID = data.result;
@@ -26,6 +25,7 @@ angular.module('starter.controllers', [])
         Init: _init, 
         Vendor: $scope.selectedVendor, 
         ExpriyTime : expiry,
+        ReadyForCollection : false,
         Bids: {}
       }]);   
     });
@@ -64,14 +64,15 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($ionicLoading, $scope, Orders, $timeout, $cordovaLocalNotification, $ionicPlatform) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('OrdersCtrl', function($scope, $ionicLoading, $timeout, Vendors,
+  $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
+
+
+  var _username = localStorageService.get("__username");
+  $scope.myOrders = [];
+  $scope.orders = [];
+
+  
   $scope.showLoading = function(loadAnimationDuration) {
     $ionicLoading.show({
       duration : loadAnimationDuration,
@@ -79,6 +80,12 @@ angular.module('starter.controllers', [])
       template : '<p class="item-icon-left">Loading...<ion-spinner icon="bubbles"/></p>'
     });
   };
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.showLoading(1500);
+    $scope.refreshOrders();
+    $scope.refreshOrders();
+  });
 
   $scope.$on('$stateChangeSuccess', function(event, toState) {
 
@@ -90,32 +97,55 @@ angular.module('starter.controllers', [])
   });
 
   $ionicPlatform.ready(function () {       
-        $scope.scheduleSingleNotification = function () {
-          $cordovaLocalNotification.schedule({
-            id: 1,
-            title: 'Warning',
-            text: 'Your order has arrived!',
-            data: {
-              customProperty: 'custom value'
-            }
-          }).then(function (result) {
-            console.log('Notification 1 triggered');
-          });
-        };
+    $scope.scheduleSingleNotification = function () {
+      $cordovaLocalNotification.schedule({
+        id: 1,
+        title: 'Warning',
+        text: 'Your order has arrived!',
+        data: {
+          customProperty: 'custom value'
+        }
+      }).then(function (result) {
+        console.log('Notification 1 triggered');
+      });
+    };
   });
-  $scope.refreshOrders = function ()
-  {
-    $scope.orders = Orders.all();
+
+  $scope.refreshOrders = function () {
+    dbService.getAllOrders().then(function(data){
+      console.log("received, ", data.result);
+      $scope.orders = data.result;
+
+      data.result.map(function(order) {
+        for(var i in $scope.myOrders) {
+          if($scope.myOrders[i].ID == order.ID){
+            console.log('exist');
+            return;
+          }
+        }
+        if (order.Init === _username) {
+          $scope.myOrders.push(order);
+        }
+        else if (typeof order.Bids !== 'undefined') {
+          order.Bids.map(function(bid) {
+            if(bid.guestName === _username)
+              $scope.myOrders.push(order);
+          });
+        }
+      });
+    });
     $timeout(function() {
         $scope.$broadcast('scroll.refreshComplete');
     });
-  }
+  };
 
-  $scope.orders = Orders.all();
-  $scope.myorders = Orders.getMyOrder();
+  $scope.getVendorThumbnail = function (name) {
+    return Vendors.getThumbnailByName(name);
+  }
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams, Orders, dbService, $log) {
+.controller('OrderDetailCtrl', function($scope, $stateParams, dbService, $log) {
+  console.log('OrderDetailCtrl');
   $scope.order = dbService.getOrderdetail($stateParams.orderId).$$state.value.result;
   $scope.bids = [];
   angular.forEach($scope.order, function(value,key)
@@ -128,22 +158,22 @@ angular.module('starter.controllers', [])
   $log.debug($scope.bids);
 })
 
-.controller('AccountCtrl', function($scope,localStorageService) {
+.controller('AccountCtrl', function($scope,localStorageService, $state) {
 
-  $scope.owner = localStorageService.get('__username') ? 
-                 localStorageService.get('__username')  : '';
-
-  $scope.seat = localStorageService.get('__seat') ? 
-                localStorageService.get('__seat') : '';
+  $scope.owner = localStorageService.get('__username');
+  $scope.seat = localStorageService.get('__seat');
 
   $scope.updateSeat = function(seat){
     localStorageService.set('__seat', seat);
     $scope.seat = seat;
   };
 
-  $scope.logout = function() {
-
+  $scope.logout = function(){
+    localStorageService.set('__username','');
+    localStorageService.set('__JWT','');
+    $state.go('login');
   };
+
 })
 
 .controller('MapCtrl', function($scope, $stateParams, localStorageService) {
@@ -167,7 +197,7 @@ angular.module('starter.controllers', [])
   var _JWT = localStorageService.get('__JWT');     
   jwtParserService.parseJWTclaim(_JWT)    
   .success(function(data)
-    {   
+  {   
       $log.debug("User has already logged in.");
       $state.go('tab.orders');
   })
@@ -178,4 +208,6 @@ angular.module('starter.controllers', [])
   $scope.login = function() {     
       loginService.loginUser($scope.data.username, $scope.data.password);
   };
-});
+
+
+})
