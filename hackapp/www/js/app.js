@@ -86,22 +86,22 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
 
-  .state('tab.buy-summary', {
-    url: '/buy/summary',
-    views: {
-      'tab-buy': {
-        templateUrl: 'templates/buy-summary.html',
-        controller: 'BuyCtrl'
-      }
-    }
-  })
-
   .state('tab.info', {
     url: '/info',
     views: {
       'tab-info': {
         templateUrl: 'templates/tab-info.html',
         controller: 'AccountCtrl'
+      }
+    }
+  })
+
+  .state('tab.info-map', {
+    url: '/info/:mapId',
+    views: {
+      'tab-info': {
+        templateUrl: 'templates/info-map.html',
+        controller: 'MapCtrl'
       }
     }
   })

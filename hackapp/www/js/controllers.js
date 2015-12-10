@@ -89,14 +89,23 @@ angular.module('starter.controllers', [])
 
 .controller('AccountCtrl', function($scope,localStorageService) {
 
-  $scope.owner = localStorageService.get('__username');
-  $scope.getSeat = localStorageService.get('__seat');
+  $scope.owner = localStorageService.get('__username') ? 
+                 localStorageService.get('__username')  : '';
 
-  $scope.seat = function(seat){
-    localStorageService.set('__seat');
+  $scope.seat = localStorageService.get('__seat') ? 
+                localStorageService.get('__seat') : '';
+
+  $scope.updateSeat = function(seat){
+    console.log('Updated seat number is ', seat);
+    localStorageService.set('__seat', seat);
     $scope.seat = seat;
   };
-  
+})
+
+.controller('MapCtrl', function($scope, $stateParams, localStorageService) {
+
+  $scope.floor = $stateParams.mapId;
+  console.log($scope.floor);
 })
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
