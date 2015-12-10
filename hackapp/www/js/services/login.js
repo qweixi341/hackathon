@@ -18,7 +18,7 @@ angular.module('starter.services')
 	        	.error(function(data)
 	        	{
 					console.log('data');
-	        		console.log(data);
+	        		console.log(data.returnData.reason);
 	        		if(data.returnData == '0')
 	        		{
 	        			var alertPopup = $ionicPopup.alert

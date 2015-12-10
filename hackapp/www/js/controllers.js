@@ -80,70 +80,65 @@ angular.module('starter.controllers', [])
     });
   };
 
-  $scope.$on('$ionicView.enter', function(e) {
-    $scope.showLoading(1500);
-    $scope.refreshOrders();
-    $scope.refreshOrders();
-  });
 
   $scope.$on('$stateChangeSuccess', function(event, toState) {
 
     //only load for searchBook state
     if (toState.name == 'tab.orders') {      
-      $scope.showLoading(1500);
+      $scope.showLoading(300);
       $scope.refreshOrders();
     }
   });
 
-  $ionicPlatform.ready(function () {      
-    $cordovaBadge.promptForPermission();
+  // $ionicPlatform.ready(function () {      
+  //   $cordovaBadge.promptForPermission();
  
-        $scope.setBadge = function(value) {
-            $cordovaBadge.hasPermission().then(function(result) {
-                $cordovaBadge.set(value);
-            }, function(error) {
-                alert(error);
-            });
-        }
-    });
+  //       $scope.setBadge = function(value) {
+  //           $cordovaBadge.hasPermission().then(function(result) {
+  //               $cordovaBadge.set(value);
+  //           }, function(error) {
+  //               alert(error);
+  //           });
+  //       }
+  //   });
 
-    $scope.scheduleSingleNotification = function () {
-      $cordovaLocalNotification.schedule({
-        id: 1,
-        title: 'Warning',
-        text: 'Your order has arrived!',
-        data: {
-          customProperty: 'custom value'
-        }
-      }).then(function (result) {
-        console.log('Notification 1 triggered');
-      });
-    };
+  //   $scope.scheduleSingleNotification = function () {
+  //     $cordovaLocalNotification.schedule({
+  //       id: 1,
+  //       title: 'Warning',
+  //       text: 'Your order has arrived!',
+  //       data: {
+  //         customProperty: 'custom value'
+  //       }
+  //     }).then(function (result) {
+  //       console.log('Notification 1 triggered');
+  //     });
+  //   };
 
-    $scope.scheduleDelayedNotification = function () {
-          var now = new Date().getTime();
-          var _10SecondsFromNow = new Date(now + 10 * 1000);
+  //   $scope.scheduleDelayedNotification = function () {
+  //         var now = new Date().getTime();
+  //         var _10SecondsFromNow = new Date(now + 10 * 1000);
  
-          $cordovaLocalNotification.schedule({
-            id: 2,
-            title: 'Warning',
-            text: 'Im so late',
-            at: _10SecondsFromNow
-          }).then(function (result) {
-            console.log('Notification 2 triggered');
-          });
-    };
+  //         $cordovaLocalNotification.schedule({
+  //           id: 2,
+  //           title: 'Warning',
+  //           text: 'Im so late',
+  //           at: _10SecondsFromNow
+  //         }).then(function (result) {
+  //           console.log('Notification 2 triggered');
+  //         });
+  //   };
 
-  $scope.scheduleEveryMinuteNotification = function () {
-    $cordovaLocalNotification.schedule({
-      id: 3,
-      title: 'Warning',
-      text: 'Dont fall asleep',
-      every: 'minute'
-    }).then(function (result) {
-      console.log('Notification 3 triggered');
-    });
-  };
+  // $scope.scheduleEveryMinuteNotification = function () {
+  //   $cordovaLocalNotification.schedule({
+  //     id: 3,
+  //     title: 'Warning',
+  //     text: 'Dont fall asleep',
+  //     every: 'minute'
+  //   }).then(function (result) {
+  //     console.log('Notification 3 triggered');
+  //   });
+  // };
 
   $scope.refreshOrders = function () {
     dbService.getAllOrders().then(function(data){
@@ -168,9 +163,11 @@ angular.module('starter.controllers', [])
         }
       });
     });
+
     $timeout(function() {
         $scope.$broadcast('scroll.refreshComplete');
-    });
+    });  
+
   };
 
   $scope.getVendorThumbnail = function (name) {
@@ -180,6 +177,11 @@ angular.module('starter.controllers', [])
   $scope.goToDetail = function (order) {
     $state.go('tab.order-detail', {orderId: order.ID});
   };
+
+
+  $scope.showLoading(1500);
+  $scope.refreshOrders();
+    
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
