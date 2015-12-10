@@ -106,7 +106,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     url: '/info/:mapId',
     views: {
       'tab-info': {
-        templateUrl: 'templates/info-map.html',
+        templateUrl: 'templates/Info-map.html',
         controller: 'MapCtrl'
       }
     }
