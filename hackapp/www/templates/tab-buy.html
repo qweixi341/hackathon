@@ -12,13 +12,20 @@
           class="item-remove-animate item-icon-right" 
           type="item-text-wrap" ng-click="goBuyTime()">
           <h2>When are you going?</h2>
-          <p>{{selectedTimeDisplay}}</p>
+          <p>{{selectedTime}}</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item 
+          class="item-remove-animate item-icon-right" 
+          type="item-text-wrap" ng-click="goBuyPantry()">
+          <h2>Where to Collect?</h2>
+          <p>{{selectedPantry}}</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
       </ion-list>
       <button ng-click="confirmBuy()" 
               class="button button-block button-calm"
-              ng-disabled="{{!selectedVendor || !selectedTime}}">
+              ng-disabled="{{!selectedVendor || !selectedTime || !selectedPantry}}">
         Publish
       </button>
   </ion-content>

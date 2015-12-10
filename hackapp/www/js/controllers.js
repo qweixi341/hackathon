@@ -4,15 +4,18 @@ angular.module('starter.controllers', [])
 
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
+  $scope.selectedPantry = $stateParams.pantry;
   $scope.selectedTimeDisplay = $stateParams.timeout ? 'In ' + $stateParams.timeout + ' minutes' : '';
 
   $scope.goBuyVendors = function() {
-    $state.go('tab.buy-vendors', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
+    $state.go('tab.buy-vendors', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime , pantry: $scope.selectedPantry});
   };
   $scope.goBuyTime = function() {
-    $state.go('tab.buy-time', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
+    $state.go('tab.buy-time', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime, pantry: $scope.selectedPantry});
   };
-
+  $scope.goBuyPantry = function() {
+     $state.go('tab.buy-pantry', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime, pantry: $scope.selectedPantry});
+  };
   $scope.confirmBuy = function() {
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
     console.log(expiry);    
@@ -44,7 +47,7 @@ angular.module('starter.controllers', [])
 
   $scope.selectVendor = function(name) {
     console.log('selectVendor, ', name);
-    $state.go('tab.buy', {vendor : name, timeout : $stateParams.timeout});
+    $state.go('tab.buy', {vendor : name, timeout : $stateParams.timeout, pantry: $stateParams.pantry});
   };
 })
 
@@ -53,7 +56,15 @@ angular.module('starter.controllers', [])
   $scope.selectTime = function(time) {
     $scope.selectedTime = time;
     console.log('selectTime, ', time);
-    $state.go('tab.buy', {vendor : $stateParams.vendor, timeout : time});
+    $state.go('tab.buy', {vendor : $stateParams.vendor, timeout : time, pantry: $stateParams.pantry});
+  };
+})
+
+.controller('PantryCtrl', function($scope, $state, $stateParams){
+   $scope.selectPantry = function(pantry) {
+    $scope.selectedPantry= pantry;
+    console.log('selectPantry, ', pantry);
+    $state.go('tab.buy', {vandor: $stateParams.vendor, timeout : $stateParams.timeout, pantry: pantry});
   };
 })
 
