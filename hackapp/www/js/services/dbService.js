@@ -20,14 +20,15 @@ angular.module('starter.services')
           }
           return deferred.promise;
         }, 
-        getAllOrdersLength: function() 
+        getAllOrdersID: function() 
         {
           var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
           var returnObj = $firebaseObject(ref);
           var deferred = $q.defer();
           try {
             ref.on("value", function(snapshot) {
-              deferred.resolve({'error':false, 'result': snapshot.val().length});
+              var returnID = snapshot.val()[snapshot.val().length-1].ID + 1;
+              deferred.resolve({'error':false, 'result': returnID});
             }, function (errorObject) {
               deferred.resolve({'error':true, 'result': errorObject});
             });

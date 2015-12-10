@@ -102,6 +102,7 @@ angular.module('starter.services', ['firebase'])
   if(initSite)
   {
     dbService.setOrder(["orders/0", {
+      ID: 0,
       Init:'Peter', 
       Vendor:'YaKun', 
       Bids: {
@@ -112,8 +113,9 @@ angular.module('starter.services', ['firebase'])
       }
     }]);
     dbService.setOrder(["orders/1", {
+      ID: 1,
       Init:'Peter', 
-      Vendor:'Starbucks', 
+      Vendor:'Starbucks',
       Bids: {
         0: {guestName:"Ming Xia",   Message:"I want a soda can of Sprite."},
         1: {guestName:"Peter Tang", Message:"Can I have a kopi?"},
@@ -122,6 +124,7 @@ angular.module('starter.services', ['firebase'])
       }
     }]);
     dbService.setOrder(["orders/2", {
+      ID: 2,
       Init:'Siyuan', 
       Vendor:'SoupSpoon', 
       Bids: {
@@ -132,6 +135,7 @@ angular.module('starter.services', ['firebase'])
       }
     }]);
     dbService.setOrder(["orders/3", {
+      ID: 3,
       Init:'Mingxia', 
       Vendor:'sumosalad', 
       Bids: {

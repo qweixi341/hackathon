@@ -19,9 +19,10 @@ angular.module('starter.controllers', [])
     console.log(expiry);    
     _init = localStorageService.get("__username");
     $log.debug(_init);
-    dbService.getAllOrdersLength().then(function(data) {  
+    dbService.getAllOrdersID().then(function(data) {  
       _addID = data.result;
       dbService.setOrder(["orders/" + _addID, {
+        ID : _addID,
         Init: _init, 
         Vendor: $scope.selectedVendor, 
         ExpriyTime : expiry,
