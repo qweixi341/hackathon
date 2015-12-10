@@ -249,3 +249,9 @@ ion-scroll.nobgcolor {
 
 
 }
+
+
+.buy-bg {
+  background-image: url('../img/buy-bg.JPG');
+  background-size: cover;
+}
