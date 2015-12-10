@@ -2,8 +2,9 @@
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap">
-       {{owner}}
-       <button class="button button-small button-assertive icon-right ion-power logout_right_align" ng-click="logout()">Log Out</button>
+       Username {{owner}}
+        <button class="button button-small button-assertive icon-right ion-power logout_right_align" ng-click="logout()" ng-show="owner" ng-hide="!owner">Log Out
+        </button>
       </ion-item>
       <ion-item class="item-remove-animate item-icon-right item item-input" type="item-text-wrap">
           <span class="input-label">Seat number</span>
