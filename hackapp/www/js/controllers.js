@@ -207,46 +207,46 @@ angular.module('starter.controllers', [])
 
   $scope.refreshData = function() {
     dbService.getOrderdetail($stateParams.orderId)
-      .then(function (data){
-      console.log('dbservice, ', data);
-      $scope.order = data.result;
-      $scope.bids = data.result.Bids;
-      $scope.timerString = '';
-      console.log(moment($scope.order.ExpriyTime) - moment());
-      var updateClock = function() {
-      var timeRemaining = moment($scope.order.ExpriyTime) - moment();
-      var seconds = timeRemaining / 1000;
-      if (seconds <= 0) {
-        $scope.timerString = 'Order Expired!';
-      } else {
-        var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
-        var secondsLeft = parseInt(seconds % 86400 % 3600 % 60);
-        $scope.timerString = (minutesLeft < 10 ? '0' + minutesLeft : minutesLeft)
-          + ':'
-          + (secondsLeft < 10 ? '0' + secondsLeft : secondsLeft)
-      }
-    };
-    setInterval(function () {
-      $scope.$apply(updateClock);
-      }, 1000);
+      .then(function (data) {
 
-    updateClock();
+        console.log('dbservice, ', data);
+        $scope.order = data.result;
+        $scope.bids = data.result.Bids;
+        $scope.timerString = '';
+        console.log(moment($scope.order.ExpriyTime) - moment());
 
-      if($scope.order.Init === _username) { 
-        $scope.owner = true;
-      }
-      else if ($scope.bids && $scope.bids.length <= 3) {
-        var localEligible = true;
-        for(var i in $scope.bids) {
-          if($scope.bids[i].guestName === _username) {
-            localEligible = false;
+        var updateClock = function() {
+          var timeRemaining = moment($scope.order.ExpriyTime) - moment();
+          var seconds = timeRemaining / 1000;
+          if (seconds <= 0) {
+            $scope.timerString = 'Order Expired!';
+          } else {
+            var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
+            var secondsLeft = parseInt(seconds % 86400 % 3600 % 60);
+            $scope.timerString = (minutesLeft < 10 ? '0' + minutesLeft : minutesLeft)
+              + ':'
+              + (secondsLeft < 10 ? '0' + secondsLeft : secondsLeft)
           }
+        }; // end of updateClock
+        setInterval(function () { $scope.$apply(updateClock); }, 1000);
+
+        updateClock();
+
+        if($scope.order.Init === _username) { 
+          $scope.owner = true;
         }
-        $scope.eligible = localEligible;
-      } else if (!$scope.bids) {
-        $scope.eligible = true;
-      }
-    });
+        else if ($scope.bids && $scope.bids.length <= 3) {
+          var localEligible = true;
+          for(var i in $scope.bids) {
+            if($scope.bids[i].guestName === _username) {
+              localEligible = false;
+            }
+          }
+          $scope.eligible = localEligible;
+        } else if (!$scope.bids) {
+          $scope.eligible = true;
+        }
+    }); //end of getOrderDetail
 
   }; 
 
@@ -263,6 +263,14 @@ angular.module('starter.controllers', [])
     console.log("place order,", bidParams);
     dbService.setBids(bidParams);
     setTimeout($scope.refreshData, 500);
+  };
+
+  $scope.collect = function() {
+    dbService.getOrderdetail($scope.order.ID).then(function(data) {  
+      var newState = data.result;
+      newState.ReadyForCollection = true;
+      dbService.setOrder(["orders/" + $scope.order.ID, newState]);   
+    });
   };
 })
 

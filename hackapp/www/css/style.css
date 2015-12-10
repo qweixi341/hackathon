@@ -256,6 +256,12 @@ ion-scroll.nobgcolor {
   background-size: cover;
 }
 
+.bg-teh {
+  background-image: url('../img/buy-bg.JPG');
+  background-size: cover;
+  background-attachment: scroll;
+}
+
 .login-logo {
   width: 50%;
   margin-top: 50px;
