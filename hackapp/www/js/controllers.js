@@ -42,9 +42,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('VendorCtrl', function($scope, $state, $stateParams, Vendors) {
-
   $scope.vendors = Vendors.all();
-
   $scope.selectVendor = function(name) {
     console.log('selectVendor, ', name);
     $state.go('tab.buy', {vendor : name, timeout : $stateParams.timeout, pantry: $stateParams.pantry});
@@ -52,7 +50,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TimeoutCtrl', function($scope, $state, $stateParams) {
-
   $scope.selectTime = function(time) {
     $scope.selectedTime = time;
     console.log('selectTime, ', time);
@@ -64,7 +61,7 @@ angular.module('starter.controllers', [])
    $scope.selectPantry = function(pantry) {
     $scope.selectedPantry= pantry;
     console.log('selectPantry, ', pantry);
-    $state.go('tab.buy', {vandor: $stateParams.vendor, timeout : $stateParams.timeout, pantry: pantry});
+    $state.go('tab.buy', {vendor: $stateParams.vendor, timeout : $stateParams.timeout, pantry: pantry});
   };
 })
 
