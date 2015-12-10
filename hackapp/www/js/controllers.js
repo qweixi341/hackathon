@@ -67,7 +67,6 @@ angular.module('starter.controllers', [])
 .controller('OrdersCtrl', function($scope, $ionicLoading, $timeout, Vendors, $state,
   $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
 
-
   var _username = localStorageService.get("__username");
   $scope.myOrders = [];
   $scope.orders = [];
@@ -174,16 +173,29 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams, dbService, $log) {
+.controller('OrderDetailCtrl', function($scope, $stateParams, $state,
+  dbService, $log, localStorageService) {
+
   console.log('OrderDetailCtrl,', JSON.parse($stateParams.order));
 
+  var _username = localStorageService.get("__username");
+
   $scope.order = JSON.parse($stateParams.order);
-  $scope.order.BIDS = $scope.Bids || [];
+  $scope.order.Bids = $scope.order.Bids || [];
   
   console.log($scope.order.Bids);
   
   $scope.placeOrder = function(msg) {
-    console.log("place order,", msg);
+    var bidParams = [];
+    bidParams.push($scope.order.ID);
+    bidParams.push($scope.order.Bids.length + 1);
+    bidParams.push({
+      guestName: _username, 
+      Message: msg
+    });
+    console.log("place order,", bidParams);
+    dbService.setBids(bidParams);
+    $state.go('tab.orders');
   }
   // $scope.order = dbService.getOrderdetail($stateParams.order).$$state.value.result;
   // $scope.bids = [];
