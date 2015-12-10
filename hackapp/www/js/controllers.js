@@ -169,44 +169,69 @@ angular.module('starter.controllers', [])
   };
 
   $scope.goToDetail = function (order) {
-    $state.go('tab.order-detail', {order: JSON.stringify(order)});
+    $state.go('tab.order-detail', {orderId: order.ID});
   }
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams, $state,
-  dbService, $log, localStorageService) {
+.controller('OrderDetailCtrl', function($scope, $stateParams, $state
+  , dbService, $log, localStorageService) {
 
-  console.log('OrderDetailCtrl,', JSON.parse($stateParams.order));
+  $scope.order = {};
+  $scope.bids = $scope.order.Bids;
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.refreshData();
+    $scope.refreshData();
+  });
+
 
   var _username = localStorageService.get("__username");
+  $scope.eligible = true;
 
-  $scope.order = JSON.parse($stateParams.order);
-  $scope.order.Bids = $scope.order.Bids || [];
+  $scope.refreshData = function() {
+    dbService.getOrderdetail($stateParams.orderId)
+      .then(function (data){
+      console.log('dbservice, ', data);
+      $scope.order = data.result;
+      $scope.bids = data.result.Bids;
+
+      if($scope.order.Init === _username) {
+        $scope.eligible = false;
+      }
+      else if ($scope.bids) {
+        if ($scope.bids.length > 5) {
+          $scope.eligible = false;
+        }
+        else {
+          for(var i in $scope.bids) {
+            if($scope.bids[i].guestName === _username) {
+              $scope.eligible = false;
+            }
+          }
+        }
+      }
+    });
+
+  }; 
+
+
+
+
   
-  console.log($scope.order.Bids);
+  console.log($scope.bids);
   
   $scope.placeOrder = function(msg) {
     var bidParams = [];
     bidParams.push($scope.order.ID);
-    bidParams.push($scope.order.Bids.length + 1);
+    bidParams.push($scope.bids ? $scope.bids.length : 0);
     bidParams.push({
       guestName: _username, 
       Message: msg
     });
     console.log("place order,", bidParams);
     dbService.setBids(bidParams);
-    $state.go('tab.orders');
-  }
-  // $scope.order = dbService.getOrderdetail($stateParams.order).$$state.value.result;
-  // $scope.bids = [];
-  // angular.forEach($scope.order, function(value,key)
-  // {
-  //   $log.debug("value is:");
-  //   //$log.debug(value);
-  //   this.push(value);
-  // }, $scope.bids);
-
-  // $log.debug($scope.bids);
+    setTimeout($scope.refreshData, 500);
+  };
 })
 
 .controller('AccountCtrl', function($scope,localStorageService, $state) {

@@ -41,7 +41,7 @@ angular.module('starter.services')
       getOrderdetail: function(id) 
       {
 
-      var ref = new Firebase("https://kopiteh.firebaseio.com/orders/" + id + "/Bids");  
+      var ref = new Firebase("https://kopiteh.firebaseio.com/orders/" + id);  
       var returnObj = $firebaseObject(ref);
       var deferred = $q.defer();
       try {
