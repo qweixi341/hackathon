@@ -307,14 +307,17 @@ angular.module('starter.controllers', [])
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
-    $scope.refreshData();
-    $log.debug('Notification' + $scope.order.ReadyForCollection);
-    if($scope.order.ReadyForCollection == "true")
-    {
-      $log.debug('setting Notification');
-      $scope.setBadge(1);
-      $scope.scheduleSingleNotification();
-    }
+    $scope.refreshData().then (function (data){
+        $log.debug('Notification' + $scope.order.ReadyForCollection);
+        if($scope.order.ReadyForCollection == "true")
+        {
+          $log.debug('setting Notification');
+          $scope.setBadge(1);
+          $scope.scheduleSingleNotification();
+        }
+
+    });
+
 
   });
 
