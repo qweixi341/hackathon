@@ -72,8 +72,12 @@ angular.module('starter.services', ['firebase'])
       return vendors;
     },
 
-    getImageByName(name) {
-      return ;
+    getThumbnailByName(name) {
+      for (var i in vendors) {
+        if(vendors[i].name === name){
+          return vendors[i].thumbnail;
+        }
+      }
     }
   };
 })
@@ -192,23 +196,23 @@ angular.module('starter.services', ['firebase'])
   var myOrders = [];
   var allOrders = [];
 
-  dbService.getAllOrders().then(function(data){
-    console.log("received, ", data.result);
-    allOrders = data.result;
+  // dbService.getAllOrders().then(function(data){
+  //   console.log("received, ", data.result);
+  //   allOrders = data.result;
 
-    data.result.map(function(order) {
-      if (order.Init === _username) {
-        myOrders.push(order);
-      }
-      else if (typeof order.Bids !== 'undefined') {
-        order.Bids.map(function(bid) {
-          if(bid.guestName === _username)
-            myOrders.push(order);
-        });
-      }
-    });
+  //   data.result.map(function(order) {
+  //     if (order.Init === _username) {
+  //       myOrders.push(order);
+  //     }
+  //     else if (typeof order.Bids !== 'undefined') {
+  //       order.Bids.map(function(bid) {
+  //         if(bid.guestName === _username)
+  //           myOrders.push(order);
+  //       });
+  //     }
+  //   });
 
-    console.log("completed, ", allOrders, myOrders);
+  //   console.log("completed, ", allOrders, myOrders);
   });
   
 

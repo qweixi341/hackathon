@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, Orders, $timeout, 
+.controller('OrdersCtrl', function($scope, Orders, $timeout, Vendors,
   $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
 
 
@@ -83,7 +83,6 @@ angular.module('starter.controllers', [])
             return;
           }
         }
-
         if (order.Init === _username) {
           $scope.myOrders.push(order);
         }
@@ -127,10 +126,15 @@ angular.module('starter.controllers', [])
     $timeout(function() {
         $scope.$broadcast('scroll.refreshComplete');
     });
+  };
+
+  $scope.getVendorThumbnail = function (name) {
+    return Vendors.getThumbnailByName(name);
   }
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, Orders, dbService, $log) {
+  console.log('OrderDetailCtrl');
   $scope.order = dbService.getOrderdetail($stateParams.orderId).$$state.value.result;
   $scope.bids = [];
   angular.forEach($scope.order, function(value,key)
