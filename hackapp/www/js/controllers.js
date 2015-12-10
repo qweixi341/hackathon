@@ -77,8 +77,17 @@ angular.module('starter.controllers', [])
   $scope.myorders = Orders.getMyOrder();
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams, Orders) {
-  $scope.order = Orders.get($stateParams.orderId);
+.controller('OrderDetailCtrl', function($scope, $stateParams, Orders, dbService, $log) {
+  $scope.order = dbService.getOrderdetail($stateParams.orderId).$$state.value.result;
+  $scope.bids = [];
+  angular.forEach($scope.order, function(value,key)
+  {
+    $log.debug("value is:");
+    //$log.debug(value);
+    this.push(value);
+  }, $scope.bids);
+
+  $log.debug($scope.bids);
 })
 
 .controller('AccountCtrl', function($scope,localStorageService) {
