@@ -174,7 +174,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams, Orders, dbService, $log) {
+.controller('OrderDetailCtrl', function($scope, $stateParams, dbService, $log) {
   console.log('OrderDetailCtrl,', JSON.parse($stateParams.order));
 
   $scope.order = JSON.parse($stateParams.order);
