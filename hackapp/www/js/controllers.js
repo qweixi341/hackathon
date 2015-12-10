@@ -178,6 +178,10 @@ angular.module('starter.controllers', [])
     $state.go('tab.order-detail', {orderId: order.ID});
   };
 
+  $scope.readyCollect = function (order){
+    console.log("nugget");
+    //todo: add in-app notification below
+  };
 
   $scope.showLoading(1500);
   $scope.refreshOrders();
@@ -206,16 +210,17 @@ angular.module('starter.controllers', [])
       console.log('dbservice, ', data);
       $scope.order = data.result;
       $scope.bids = data.result.Bids;
-      $scope.timeTillEvent = {};
+      $scope.timerString = '';
       console.log(moment($scope.order.ExpriyTime) - moment());
-      var updateClock = function(){
-      $scope.timeRemaining = moment($scope.order.ExpriyTime) - moment();
-      $scope.seconds = $scope.timeRemaining/1000;
-      $scope.timeTillEvent = {
-        daysLeft: parseInt($scope.seconds / 86400),
-        hoursLeft: parseInt($scope.seconds % 86400 / 3600),
-        minutesLeft: parseInt($scope.seconds % 86400 % 3600 / 60),
-        secondsLeft: parseInt($scope.seconds % 86400 % 3600 % 60)
+      var updateClock = function() {
+      var timeRemaining = moment($scope.order.ExpriyTime) - moment();
+      var seconds = timeRemaining / 1000;
+      if (seconds <= 0) {
+        $scope.timerString = 'Order Expired!';
+      } else {
+        var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
+        var secondsLeft = parseInt(seconds % 86400 % 3600 % 60);
+        $scope.timerString = minutesLeft + ':' + secondsLeft;
       }
     };
       setInterval(function () {

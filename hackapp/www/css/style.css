@@ -267,7 +267,7 @@ ion-scroll.nobgcolor {
 	right: 10px;
 }
 
-.timer-color {
+.timer {
   color: #e42112;
-
+  text-align: center;
 }
