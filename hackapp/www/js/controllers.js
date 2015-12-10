@@ -269,11 +269,11 @@ angular.module('starter.controllers', [])
         }
     });
 
-    $scope.scheduleSingleNotification = function () {
+    $scope.scheduleSingleNotification = function (pantry) {
       $cordovaLocalNotification.schedule({
         id: 1,
         title: 'YaY!',
-        text: 'Your order has arrived!',
+        text: 'Your order has arrived! Please collect at ' + pantry,
         data: {
           customProperty: 'custom value'
         }
@@ -314,13 +314,14 @@ angular.module('starter.controllers', [])
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
     dbService.getOrderdetail($scope.order.ID).then(function(data) {  
-      var _ReadyForCollection = data.result.ReadyForCollection;        
+      var _ReadyForCollection = data.result.ReadyForCollection;
+      var _Pantry = data.result.Pantry;        
       $log.debug('Notification' + _ReadyForCollection);
       if(_ReadyForCollection)
       {
         $log.debug('setting Notification');
         $scope.setBadge(1);
-        $scope.scheduleSingleNotification();
+        $scope.scheduleSingleNotification(_Pantry);
       }
       $scope.refreshData();
     });
