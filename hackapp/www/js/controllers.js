@@ -245,7 +245,7 @@ angular.module('starter.controllers', [])
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
   , dbService, $log, localStorageService, $firebaseObject, $ionicPopup, $cordovaLocalNotification, $cordovaBadge, $ionicPlatform) 
 {
-  /*$ionicPlatform.ready(function () {      
+  $ionicPlatform.ready(function () {      
     $cordovaBadge.promptForPermission();
  
         $scope.setBadge = function(value) {
@@ -294,7 +294,7 @@ angular.module('starter.controllers', [])
     }).then(function (result) {
       console.log('Notification 3 triggered');
     });
-  };*/
+  };
 
 
 
@@ -303,7 +303,7 @@ angular.module('starter.controllers', [])
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
     $scope.refreshData();
-    $log.debug('Notification' + '$scope.order.ReadyForCollection');
+    $log.debug('Notification' + $scope.order.ReadyForCollection);
     if($scope.order.ReadyForCollection == "true")
     {
       $log.debug('setting Notification');
