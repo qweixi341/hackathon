@@ -236,13 +236,71 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup) {
+  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup, $cordovaLocalNotification, $cordovaBadge, $ionicPlatform) {
+  $ionicPlatform.ready(function () {      
+    $cordovaBadge.promptForPermission();
+ 
+        $scope.setBadge = function(value) {
+            $cordovaBadge.hasPermission().then(function(result) {
+                $cordovaBadge.set(value);
+            }, function(error) {
+                alert(error);
+            });
+        }
+    });
+
+    $scope.scheduleSingleNotification = function () {
+      $cordovaLocalNotification.schedule({
+        id: 1,
+        title: 'Warning',
+        text: 'Your order has arrived!',
+        data: {
+          customProperty: 'custom value'
+        }
+      }).then(function (result) {
+        console.log('Notification 1 triggered');
+      });
+    };
+
+    $scope.scheduleDelayedNotification = function () {
+          var now = new Date().getTime();
+          var _10SecondsFromNow = new Date(now + 10 * 1000);
+ 
+          $cordovaLocalNotification.schedule({
+            id: 2,
+            title: 'Warning',
+            text: 'Im so late',
+            at: _10SecondsFromNow
+          }).then(function (result) {
+            console.log('Notification 2 triggered');
+          });
+    };
+
+  $scope.scheduleEveryMinuteNotification = function () {
+    $cordovaLocalNotification.schedule({
+      id: 3,
+      title: 'Warning',
+      text: 'Dont fall asleep',
+      every: 'minute'
+    }).then(function (result) {
+      console.log('Notification 3 triggered');
+    });
+  };
+
+
 
   var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
     $scope.refreshData();
+
+    if($scope.order.ReadyForCollection == "true")
+    {
+      $scope.setBadge(1);
+      $scope.scheduleSingleNotification();
+    }
+
   });
 
   $scope.order = {};
