@@ -80,16 +80,12 @@ angular.module('starter.controllers', [])
     });
   };
 
-  $scope.$on('$ionicView.enter', function(e) {
-    $scope.showLoading(1500);
-    $scope.refreshOrders();
-  });
 
   $scope.$on('$stateChangeSuccess', function(event, toState) {
 
     //only load for searchBook state
     if (toState.name == 'tab.orders') {      
-      $scope.showLoading(1500);
+      $scope.showLoading(300);
       $scope.refreshOrders();
     }
   });
@@ -167,9 +163,11 @@ angular.module('starter.controllers', [])
         }
       });
     });
+
     $timeout(function() {
         $scope.$broadcast('scroll.refreshComplete');
-    });
+    });  
+
   };
 
   $scope.getVendorThumbnail = function (name) {
@@ -179,6 +177,11 @@ angular.module('starter.controllers', [])
   $scope.goToDetail = function (order) {
     $state.go('tab.order-detail', {orderId: order.ID});
   };
+
+
+  $scope.showLoading(1500);
+  $scope.refreshOrders();
+    
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
