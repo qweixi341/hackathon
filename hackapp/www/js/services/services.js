@@ -23,7 +23,11 @@ angular.module('starter.services', ['firebase'])
       name: 'Bread yard',
       thumbnail: 'img/bread yard.jpg'
     },
-    
+    {
+      id: 8,
+      name: 'Tuck Shop',
+      thumbnail: 'img/TuckShop.jpg'
+    },    
     {
       id: 9,
       name: 'Coffee Hive',
