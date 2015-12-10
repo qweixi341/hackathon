@@ -12,7 +12,10 @@
         <img ng-src="{{getVendorThumbnail(order.Vendor)}}">
         <h2>{{order.Init}}</h2>
         <p>{{order.Vendor}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>        
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="button-positive" ng-click="readyCollect(order)">
+          Ready for Collection
+        </ion-option-button>        
       </ion-item>
 
       <div class="item item-divider">Active Orders</div>

@@ -178,6 +178,10 @@ angular.module('starter.controllers', [])
     $state.go('tab.order-detail', {orderId: order.ID});
   };
 
+  $scope.readyCollect = function (order){
+    console.log("nugget");
+    //todo: add in-app notification below
+  };
 
   $scope.showLoading(1500);
   $scope.refreshOrders();
