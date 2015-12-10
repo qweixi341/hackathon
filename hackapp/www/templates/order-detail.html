@@ -8,12 +8,12 @@
   <ion-content class="padding">
     
     <ion-list>
-      <ion-item ng-repeat="bid in bids ">
+      <ion-item ng-repeat="bid in bids">
         {{bid.guestName}} : {{bid.Message}}!
       </ion-item>
     </ion-list>
-    <label class="item item-input">
-      <input type="text" placeholder="I want to order:" ng-model="newOrder" >
+    <label class="item item-input" ng-show="eligible">
+      <input type="text" placeholder="I want to order:" ng-model="newOrder">
       <form ng-submit="placeOrder(newOrder)" name="UserCommentForm">
       <button class="button button-small" ng-disabled="UserCommentForm.$invalid">
         submit
