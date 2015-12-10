@@ -1,5 +1,7 @@
 <ion-view view-title="Map">
   <ion-content>
-	<div><img ng-src="{{slideImg}}"></div>
+    <ion-scroll zooming="true">
+        <img ng-src="{{getMapImg()}}">
+    </ion-scroll>
   </ion-content>
 </ion-view>
