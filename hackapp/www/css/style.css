@@ -266,3 +266,8 @@ ion-scroll.nobgcolor {
 	position: absolute;
 	right: 10px;
 }
+
+.timer-color {
+  color: #e42112;
+
+}

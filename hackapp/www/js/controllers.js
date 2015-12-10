@@ -196,6 +196,7 @@ angular.module('starter.controllers', [])
 
   var _username = localStorageService.get("__username");
   $scope.eligible = true;
+  $scope.owner = false;
 
   $scope.refreshData = function() {
     dbService.getOrderdetail($stateParams.orderId)
@@ -203,9 +204,25 @@ angular.module('starter.controllers', [])
       console.log('dbservice, ', data);
       $scope.order = data.result;
       $scope.bids = data.result.Bids;
-
-      if($scope.order.Init === _username) {
+      $scope.timeTillEvent = {};
+      console.log(moment($scope.order.ExpriyTime) - moment());
+      var updateClock = function(){
+      $scope.timeRemaining = moment($scope.order.ExpriyTime) - moment();
+      $scope.seconds = $scope.timeRemaining/1000;
+      $scope.timeTillEvent = {
+        daysLeft: parseInt($scope.seconds / 86400),
+        hoursLeft: parseInt($scope.seconds % 86400 / 3600),
+        minutesLeft: parseInt($scope.seconds % 86400 % 3600 / 60),
+        secondsLeft: parseInt($scope.seconds % 86400 % 3600 % 60)
+      }
+    };
+      setInterval(function () {
+      $scope.$apply(updateClock);
+      }, 1000);
+      updateClock();
+      if($scope.order.Init === _username) { 
         $scope.eligible = false;
+        $scope.owner = true;
       }
       else if ($scope.bids) {
         if ($scope.bids.length > 5) {
@@ -223,10 +240,6 @@ angular.module('starter.controllers', [])
 
   }; 
 
-
-
-
-  
   console.log($scope.bids);
   
   $scope.placeOrder = function(msg) {
