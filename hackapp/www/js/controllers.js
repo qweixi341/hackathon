@@ -28,6 +28,7 @@ angular.module('starter.controllers', [])
         Vendor: $scope.selectedVendor, 
         ExpriyTime : expiry,
         ReadyForCollection : false,
+        Pantry: $scope.selectedPantry,
         Bids: {}
       }]);   
     });
@@ -35,11 +36,14 @@ angular.module('starter.controllers', [])
         title : 'Success',
         template : 'You have successfully created an order.'
     });
-    $scope.selectedVendor = '';
-    $scope.selectedTime = '';
-    $scope.selectedPantry = '';
     $state.go('tab.orders');
   };
+  // $scope.$on('$ionicView.enter', function(e) {
+  //   $scope.refreshData();
+  // };
+  // var refreshData = function(){
+
+  // };
 })
 
 .controller('VendorCtrl', function($scope, $state, $stateParams, Vendors) {
