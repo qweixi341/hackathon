@@ -1,7 +1,6 @@
 angular.module('starter.controllers', [])
 
 .controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, dbService, localStorageService) {
-
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
   $scope.selectedPantry = $stateParams.pantry;
@@ -36,9 +35,11 @@ angular.module('starter.controllers', [])
         title : 'Success',
         template : 'You have successfully created an order.'
     });
+    $scope.selectedVendor = '';
+    $scope.selectedTime = '';
+    $scope.selectedPantry = '';
     $state.go('tab.orders');
   };
-
 })
 
 .controller('VendorCtrl', function($scope, $state, $stateParams, Vendors) {
@@ -399,10 +400,10 @@ angular.module('starter.controllers', [])
   $scope.owner = localStorageService.get('__username');
   $scope.seat = localStorageService.get('__seat');
 
-  $scope.updateSeat = function(seat){
-    localStorageService.set('__seat', seat);
-    $scope.seat = seat;
-  };
+  // $scope.updateSeat = function(seat){
+  //   localStorageService.set('__seat', seat);
+  //   $scope.seat = seat;
+  // };
 
   $scope.logout = function(){
     localStorageService.set('__username','');
