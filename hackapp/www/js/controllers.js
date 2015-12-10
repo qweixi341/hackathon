@@ -14,10 +14,10 @@ angular.module('starter.controllers', [])
   };
 
   $scope.confirmBuy = function() {
-    console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
     console.log(expiry);    
     _init = localStorageService.get("__username");
+
     $log.debug(_init);
     dbService.getAllOrdersID().then(function(data) {  
       _addID = data.result;
@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, Orders, $timeout) {
+.controller('OrdersCtrl', function($scope, Orders, $timeout, $cordovaLocalNotification, $ionicPlatform) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -73,6 +73,20 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
   
+  $ionicPlatform.ready(function () {       
+        $scope.scheduleSingleNotification = function () {
+          $cordovaLocalNotification.schedule({
+            id: 1,
+            title: 'Warning',
+            text: 'Your order has arrived!',
+            data: {
+              customProperty: 'custom value'
+            }
+          }).then(function (result) {
+            console.log('Notification 1 triggered');
+          });
+        };
+  });
   $scope.refreshOrders = function ()
   {
     $scope.orders = Orders.all();
@@ -80,8 +94,6 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
     });
   }
-
-
 
   $scope.orders = Orders.all();
   $scope.myorders = Orders.getMyOrder();
@@ -109,9 +121,12 @@ angular.module('starter.controllers', [])
                 localStorageService.get('__seat') : '';
 
   $scope.updateSeat = function(seat){
-    console.log('Updated seat number is ', seat);
     localStorageService.set('__seat', seat);
     $scope.seat = seat;
+  };
+
+  $scope.logout = function() {
+
   };
 })
 

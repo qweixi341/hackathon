@@ -255,3 +255,9 @@ ion-scroll.nobgcolor {
   background-image: url('../img/buy-bg.JPG');
   background-size: cover;
 }
+
+.login-logo {
+  width: 50%;
+  margin-top: 50px;
+  margin-left: 25%;
+}

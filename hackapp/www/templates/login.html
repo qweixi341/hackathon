@@ -1,20 +1,18 @@
 <ion-view hide-nav-bar="true" title="User Login" class="login_pane">
 	<ion-content padding="true">
-		<h1 class= "login_h1">
-		<lable>
-				Do me a favor Autodesk
-		</lable></h1>
-		<div class="list login_list">
-			<label class="item item-input item-floating-label login_item"> <span class="input-label login_input-label">ADS Account :</span>
-				<input type="text" placeholder="ADS Account" ng-model="data.username" required>
-			</label>
-			<label class="item item-input item-floating-label login_item"> <span class="input-label login_input-label">Password :</span>
-				<input type="password" placeholder="Password" ng-model="data.password" required>
-			</label>
-			<button class="button button-dark button-calm login_button" ng-click="login()">
-				Login
-			</button>
-		</div>
-		
+		<img src='./img/icon.png'  class="login-logo" />
+		<div class="padding-top"></div>
+    <form novalidate>
+    	<h4>Log in using ADS Account:</h4>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">ADS Account</span>
+        <input type="text" placeholder="ADS Account" ng-model="data.username" required>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="Password" ng-model="data.password" required>
+      </label>
+      <button class="button button-block button-calm" ng-click="login()">Login</button>
+    </form>
 	</ion-content>
 </ion-view>
