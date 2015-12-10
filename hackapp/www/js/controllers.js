@@ -2,7 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('BuyCtrl', function($scope, $state, $stateParams, Orders) {
 
-  console.log('refresh');
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
   $scope.selectedTimeDisplay = $stateParams.timeout ? 'In ' + $stateParams.timeout + ' minutes' : '';
