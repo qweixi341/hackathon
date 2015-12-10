@@ -74,7 +74,7 @@ angular.module('starter.services', ['firebase'])
   };
 })
 
-.factory('Orders', function(dbService, $log, $firebaseObject) {
+.factory('Orders', function(localStorageService, dbService, $log, $firebaseObject) {
   // Might use a resource here that returns a JSON array
   // Below data would be extend after grabbing from Firebase
 
@@ -152,13 +152,14 @@ angular.module('starter.services', ['firebase'])
     var id = 0;
     angular.forEach(data.result, function(value, key) {
       var bool_myorder = false;
+      var _username = localStorageService.get("__username");
       if(value.Init!= "")
       {
         orders.push({id:id,name:value.Init,lastText:value.Vendor,face: imageDict[value.Vendor.toLowerCase()]});
       }
       //known issue: we assume that each user can only be in one order either as initiator or bider
       //todo: below Weixi is hardcoded and should be edited to dynamic value
-      if(value.Init=="Weixi")
+      if(value.Init==_username)
       {
         bool_myorder=true;
       }
@@ -168,7 +169,7 @@ angular.module('starter.services', ['firebase'])
           angular.forEach(value, function(value, key) {
             if(typeof(value) == "object"){
               angular.forEach(value, function(value, key) {               
-                if(value.guestName =="Weixi")
+                if(value.guestName ==_username)
                   bool_myorder=true;
                   return false;
               });            

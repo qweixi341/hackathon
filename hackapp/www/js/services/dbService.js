@@ -20,6 +20,23 @@ angular.module('starter.services')
           }
           return deferred.promise;
         }, 
+        getAllOrdersLength: function() 
+        {
+          var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
+          var returnObj = $firebaseObject(ref);
+          var deferred = $q.defer();
+          try {
+            ref.on("value", function(snapshot) {
+              deferred.resolve({'error':false, 'result': snapshot.val().length});
+            }, function (errorObject) {
+              deferred.resolve({'error':true, 'result': errorObject});
+            });
+          }
+          catch (exc) {
+              deferred.resolve({'error':true, 'result': 'exception: ' + exc.toString()});
+          }
+          return deferred.promise;
+        }, 
         getOrderdetail: function(id) 
         {
 
