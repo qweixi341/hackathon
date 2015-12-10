@@ -11,8 +11,8 @@ angular.module('starter.services')
 	            .success(function(data)
 	            {   
 	            	console.log(data);
-	            	localStorageService.set('__username', name);
-		    		localStorageService.set('__JWT', data.returnData.JWT);		            
+	            	localStorageService.set('__username', data.returnData.displayName);
+		    		localStorageService.set('__JWT', data.returnData.JWT);		
 	            	$state.go('tab.orders');
 	        	})
 	        	.error(function(data)
