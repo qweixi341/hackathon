@@ -232,7 +232,13 @@ angular.module('starter.controllers', [])
 
   $scope.readyCollect = function (order){
     console.log("nugget");
-    //todo: add in-app notification below
+    console.log(order.ID);
+    var _id = order.ID;
+    dbService.getOrderdetail(_id).then(function(data) {  
+      var newState = data.result;
+      newState.ReadyForCollection = true;
+      dbService.setOrder(["orders/" + _id, newState]);   
+    });
   };
 
   $scope.showLoading(1500);
