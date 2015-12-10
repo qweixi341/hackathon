@@ -189,10 +189,6 @@ angular.module('starter.services', ['firebase'])
   //   });
   // });
 
-
-  var _username = localStorageService.get("__username");
-
-  
   var myOrders = [];
   var allOrders = [];
 
