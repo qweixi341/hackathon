@@ -1,7 +1,6 @@
 angular.module('starter.controllers', [])
 
 .controller('BuyCtrl', function($ionicViewService, $log, $scope, $state, $stateParams, $ionicPopup, dbService, localStorageService) {
-
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
   $scope.selectedPantry = $stateParams.pantry;
@@ -30,6 +29,7 @@ angular.module('starter.controllers', [])
         ExpriyTime : expiry,
         Pantry: $scope.selectedPantry,
         ReadyForCollection : false,
+        Pantry: $scope.selectedPantry,
         Bids: {}
       }]);   
     });
@@ -40,7 +40,12 @@ angular.module('starter.controllers', [])
     $ionicViewService.clearHistory();
     $state.go('tab.orders');
   };
+  // $scope.$on('$ionicView.enter', function(e) {
+  //   $scope.refreshData();
+  // };
+  // var refreshData = function(){
 
+  // };
 })
 
 .controller('VendorCtrl', function($scope, $state, $stateParams, Vendors) {
@@ -238,12 +243,71 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService, $firebaseObject) {
+  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup, $cordovaLocalNotification, $cordovaBadge, $ionicPlatform) {
+  $ionicPlatform.ready(function () {      
+    $cordovaBadge.promptForPermission();
+ 
+        $scope.setBadge = function(value) {
+            $cordovaBadge.hasPermission().then(function(result) {
+                $cordovaBadge.set(value);
+            }, function(error) {
+                alert(error);
+            });
+        }
+    });
+
+    $scope.scheduleSingleNotification = function () {
+      $cordovaLocalNotification.schedule({
+        id: 1,
+        title: 'Warning',
+        text: 'Your order has arrived!',
+        data: {
+          customProperty: 'custom value'
+        }
+      }).then(function (result) {
+        console.log('Notification 1 triggered');
+      });
+    };
+
+    $scope.scheduleDelayedNotification = function () {
+          var now = new Date().getTime();
+          var _10SecondsFromNow = new Date(now + 10 * 1000);
+ 
+          $cordovaLocalNotification.schedule({
+            id: 2,
+            title: 'Warning',
+            text: 'Im so late',
+            at: _10SecondsFromNow
+          }).then(function (result) {
+            console.log('Notification 2 triggered');
+          });
+    };
+
+  $scope.scheduleEveryMinuteNotification = function () {
+    $cordovaLocalNotification.schedule({
+      id: 3,
+      title: 'Warning',
+      text: 'Dont fall asleep',
+      every: 'minute'
+    }).then(function (result) {
+      console.log('Notification 3 triggered');
+    });
+  };
+
+
 
   var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
+    $scope.refreshData();
+
+    if($scope.order.ReadyForCollection == "true")
+    {
+      $scope.setBadge(1);
+      $scope.scheduleSingleNotification();
+    }
+
   });
 
   $scope.order = {};
@@ -306,8 +370,16 @@ angular.module('starter.controllers', [])
   }; 
 
   console.log($scope.bids);
-  
+  $scope.newOrder = '';
   $scope.placeOrder = function(msg) {
+    if ('' == msg)
+    {
+      var alertPopup = $ionicPopup.alert({
+        template : 'Order cannot be empty!'
+      });
+      return;
+    }
+
     var bidParams = [];
     bidParams.push($scope.order.ID);
     bidParams.push($scope.bids ? $scope.bids.length : 0);
@@ -334,10 +406,10 @@ angular.module('starter.controllers', [])
   $scope.owner = localStorageService.get('__username');
   $scope.seat = localStorageService.get('__seat');
 
-  $scope.updateSeat = function(seat){
-    localStorageService.set('__seat', seat);
-    $scope.seat = seat;
-  };
+  // $scope.updateSeat = function(seat){
+  //   localStorageService.set('__seat', seat);
+  //   $scope.seat = seat;
+  // };
 
   $scope.logout = function(){
     localStorageService.set('__username','');

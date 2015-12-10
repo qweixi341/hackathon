@@ -26,8 +26,16 @@ angular.module('starter.services')
         var returnObj = $firebaseObject(ref);
         var deferred = $q.defer();
         try {
-          ref.on("value", function(snapshot) {
-            var returnID = snapshot.val()[snapshot.val().length-1].ID + 1;
+          ref.on("value", function(snapshot) {            
+            if(snapshot.val())
+            {
+              var returnID = snapshot.val()[snapshot.val().length-1].ID + 1;  
+            }
+            else
+            {
+              var returnID = 0;
+            }
+            
             deferred.resolve({'error':false, 'result': returnID});
           }, function (errorObject) {
             deferred.resolve({'error':true, 'result': errorObject});
