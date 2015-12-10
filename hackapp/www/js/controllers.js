@@ -163,34 +163,39 @@ angular.module('starter.controllers', [])
       for(var x in data.result) {
         var order = data.result[x];
 
-        var existing = false;
-        for(var i in $scope.orders) {
-          if($scope.orders[i].ID == order.ID){
-            existing = true;
-            break;
-          }
-        }
-        if(!existing)
-          $scope.orders.push(order);
-
-
-        existing = false;
+        var inMyOrder = false;
         for(var i in $scope.myOrders) {
           if($scope.myOrders[i].ID == order.ID){
-            existing = true;
+            inMyOrder = true;
             break;
           }
         }
-        if (!existing) {
+        if (!inMyOrder) {
           if (order.Init === _username) {
             $scope.myOrders.push(order);
+            inMyOrder = true;
           }
           else if (typeof order.Bids !== 'undefined') {
             order.Bids.map(function(bid) {
               if(bid.guestName === _username)
                 $scope.myOrders.push(order);
+                inMyOrder = true;
             });
           }
+        }
+
+        var id = -1;
+        for(var i in $scope.orders) {
+          if($scope.orders[i].ID == order.ID){
+            id = i;
+            break;
+          }
+        }
+        if(id === -1 && !inMyOrder) {
+          $scope.orders.push(order);
+        }
+        else if (id !== -1 && inMyOrder) {
+          $scope.orders.splice(id, 1);
         }
 
         if($scope.orders)
