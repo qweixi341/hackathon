@@ -180,7 +180,9 @@ angular.module('starter.controllers', [])
 
   $scope.goToDetail = function (order) {
     $state.go('tab.order-detail', {order: JSON.stringify(order)});
-  }
+  };
+
+  $scope.setBadge(5);
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state,
