@@ -202,6 +202,7 @@ angular.module('starter.controllers', [])
 
   var _username = localStorageService.get("__username");
   $scope.eligible = true;
+  $scope.owner = false;
 
   $scope.refreshData = function() {
     dbService.getOrderdetail($stateParams.orderId)
@@ -209,9 +210,26 @@ angular.module('starter.controllers', [])
       console.log('dbservice, ', data);
       $scope.order = data.result;
       $scope.bids = data.result.Bids;
-
-      if($scope.order.Init === _username) {
+      $scope.timerString = '';
+      console.log(moment($scope.order.ExpriyTime) - moment());
+      var updateClock = function() {
+      var timeRemaining = moment($scope.order.ExpriyTime) - moment();
+      var seconds = timeRemaining / 1000;
+      if (seconds <= 0) {
+        $scope.timerString = 'Order Expired!';
+      } else {
+        var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
+        var secondsLeft = parseInt(seconds % 86400 % 3600 % 60);
+        $scope.timerString = minutesLeft + ':' + secondsLeft;
+      }
+    };
+      setInterval(function () {
+      $scope.$apply(updateClock);
+      }, 1000);
+      updateClock();
+      if($scope.order.Init === _username) { 
         $scope.eligible = false;
+        $scope.owner = true;
       }
       else if ($scope.bids) {
         if ($scope.bids.length > 5) {
@@ -229,10 +247,6 @@ angular.module('starter.controllers', [])
 
   }; 
 
-
-
-
-  
   console.log($scope.bids);
   
   $scope.placeOrder = function(msg) {

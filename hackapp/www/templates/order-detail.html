@@ -4,20 +4,26 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{order.name}}">
+<ion-view view-title="{{order.Vendor}}">
   <ion-content class="padding">
-    
+      <h2 class='timer'>{{timerString}}</h2>
+    </div>
     <ion-list>
+      <div class="item item-divider">List of orders:</div>
       <ion-item ng-repeat="bid in bids">
         {{bid.guestName}} : {{bid.Message}}!
       </ion-item>
     </ion-list>
     <label class="item item-input" ng-show="eligible">
-      <input type="text" placeholder="I want to order:" ng-model="newOrder">
+      <input type="text" placeholder="I want to order:" ng-model="newOrder" />
       <form ng-submit="placeOrder(newOrder)" name="UserCommentForm">
-      <button class="button button-small" ng-disabled="UserCommentForm.$invalid">
-        submit
-      </button>
+        <button class="button button-small" ng-disabled="UserCommentForm.$invalid">
+          submit
+        </button>
+      </form>
     </label>
+    <button ng-show="owner" class="button button-block button-calm">
+        Call for collection!
+    </button>
   </ion-content>
 </ion-view>
