@@ -8,7 +8,7 @@
       <ion-item class="item-remove-animate item-avatar item-icon-right" 
                 ng-repeat="order in myOrders" 
                 type="item-text-wrap" 
-                href="#/tab/orders/{{order.ID}}">
+                ng-click="goToDetail(order)">
         <img ng-src="{{getVendorThumbnail(order.Vendor)}}">
         <h2>{{order.Init}}</h2>
         <p>{{order.Vendor}}</p>
@@ -23,7 +23,7 @@
       <ion-item class="item-remove-animate item-avatar item-icon-right" 
                 ng-repeat="order in orders | filter:search.value"          
                 type="item-text-wrap" 
-                href="#/tab/orders/{{order.ID}}">
+                ng-click="goToDetail(order)">
         <img ng-src="{{getVendorThumbnail(order.Vendor)}}">
         <h2>{{order.Init}}</h2>
         <p>{{order.Vendor}}</p>

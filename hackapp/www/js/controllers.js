@@ -167,21 +167,34 @@ angular.module('starter.controllers', [])
 
   $scope.getVendorThumbnail = function (name) {
     return Vendors.getThumbnailByName(name);
+  };
+
+  $scope.goToDetail = function (order) {
+    $state.go('tab.order-detail', {order: JSON.stringify(order)});
   }
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, dbService, $log) {
-  console.log('OrderDetailCtrl');
-  $scope.order = dbService.getOrderdetail($stateParams.orderId).$$state.value.result;
-  $scope.bids = [];
-  angular.forEach($scope.order, function(value,key)
-  {
-    $log.debug("value is:");
-    //$log.debug(value);
-    this.push(value);
-  }, $scope.bids);
+  console.log('OrderDetailCtrl,', JSON.parse($stateParams.order));
 
-  $log.debug($scope.bids);
+  $scope.order = JSON.parse($stateParams.order);
+  $scope.order.BIDS = $scope.Bids || [];
+  
+  console.log($scope.order.Bids);
+  
+  $scope.placeOrder = function(msg) {
+    console.log("place order,", msg);
+  }
+  // $scope.order = dbService.getOrderdetail($stateParams.order).$$state.value.result;
+  // $scope.bids = [];
+  // angular.forEach($scope.order, function(value,key)
+  // {
+  //   $log.debug("value is:");
+  //   //$log.debug(value);
+  //   this.push(value);
+  // }, $scope.bids);
+
+  // $log.debug($scope.bids);
 })
 
 .controller('AccountCtrl', function($scope,localStorageService, $state) {
