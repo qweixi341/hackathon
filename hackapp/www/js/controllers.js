@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, Orders, dbService, localStorageService) {
+.controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, dbService, localStorageService) {
 
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
@@ -64,48 +64,38 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, Orders, $timeout, Vendors, $state,
+.controller('OrdersCtrl', function($scope, $ionicLoading, $timeout, Vendors,
   $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
 
 
   var _username = localStorageService.get("__username");
   $scope.myOrders = [];
   $scope.orders = [];
-  var refresh = function() {
-    dbService.getAllOrders().then(function(data){
-      console.log("received, ", data.result);
-      $scope.orders = data.result;
 
-      data.result.map(function(order) {
-        for(var i in $scope.myOrders) {
-          if($scope.myOrders[i].ID == order.ID){
-            console.log('exist');
-            return;
-          }
-        }
-        if (order.Init === _username) {
-          $scope.myOrders.push(order);
-        }
-        else if (typeof order.Bids !== 'undefined') {
-          order.Bids.map(function(bid) {
-            if(bid.guestName === _username)
-              $scope.myOrders.push(order);
-          });
-        }
-      });
+  
+  $scope.showLoading = function(loadAnimationDuration) {
+    $ionicLoading.show({
+      duration : loadAnimationDuration,
+      noBackdrop : true,
+      template : '<p class="item-icon-left">Loading...<ion-spinner icon="bubbles"/></p>'
     });
   };
-  refresh();
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
   $scope.$on('$ionicView.enter', function(e) {
-    refresh();
+    $scope.showLoading(1500);
+    $scope.refreshOrders();
+    $scope.refreshOrders();
   });
-  
+
+  $scope.$on('$stateChangeSuccess', function(event, toState) {
+
+    //only load for searchBook state
+    if (toState.name == 'tab.orders') {      
+      $scope.showLoading(1500);
+      $scope.refreshOrders();
+    }
+  });
+
   $ionicPlatform.ready(function () {       
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
@@ -148,7 +138,28 @@ angular.module('starter.controllers', [])
   });
 
   $scope.refreshOrders = function () {
-    refresh();
+    dbService.getAllOrders().then(function(data){
+      console.log("received, ", data.result);
+      $scope.orders = data.result;
+
+      data.result.map(function(order) {
+        for(var i in $scope.myOrders) {
+          if($scope.myOrders[i].ID == order.ID){
+            console.log('exist');
+            return;
+          }
+        }
+        if (order.Init === _username) {
+          $scope.myOrders.push(order);
+        }
+        else if (typeof order.Bids !== 'undefined') {
+          order.Bids.map(function(bid) {
+            if(bid.guestName === _username)
+              $scope.myOrders.push(order);
+          });
+        }
+      });
+    });
     $timeout(function() {
         $scope.$broadcast('scroll.refreshComplete');
     });
@@ -188,11 +199,8 @@ angular.module('starter.controllers', [])
 
 .controller('AccountCtrl', function($scope,localStorageService, $state) {
 
-  $scope.owner = localStorageService.get('__username') ? 
-                 localStorageService.get('__username')  : '';
-
-  $scope.seat = localStorageService.get('__seat') ? 
-                localStorageService.get('__seat') : '';
+  $scope.owner = localStorageService.get('__username');
+  $scope.seat = localStorageService.get('__seat');
 
   $scope.updateSeat = function(seat){
     localStorageService.set('__seat', seat);
