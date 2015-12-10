@@ -241,13 +241,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup, $cordovaLocalNotification, $cordovaBadge, $ionicPlatform) {
+  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup, $cordovaLocalNotification, $cordovaBadge, $ionicPlatform) 
+{
   $ionicPlatform.ready(function () {      
     $cordovaBadge.promptForPermission();
  
         $scope.setBadge = function(value) {
             $cordovaBadge.hasPermission().then(function(result) {
                 $cordovaBadge.set(value);
+                console.log('Notification Badge triggered');
             }, function(error) {
                 alert(error);
             });
@@ -257,7 +259,7 @@ angular.module('starter.controllers', [])
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
         id: 1,
-        title: 'Warning',
+        title: 'YaY!',
         text: 'Your order has arrived!',
         data: {
           customProperty: 'custom value'
@@ -302,6 +304,7 @@ angular.module('starter.controllers', [])
 
     if($scope.order.ReadyForCollection == "true")
     {
+      $log.debug('setting Notification');
       $scope.setBadge(1);
       $scope.scheduleSingleNotification();
     }
