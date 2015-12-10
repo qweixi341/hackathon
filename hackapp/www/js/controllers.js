@@ -134,18 +134,16 @@ angular.module('starter.controllers', [])
           });
     };
 
-    $scope.scheduleEveryMinuteNotification = function () {
-          $cordovaLocalNotification.schedule({
-            id: 3,
-            title: 'Warning',
-            text: 'Dont fall asleep',
-            every: 'minute'
-          }).then(function (result) {
-            console.log('Notification 3 triggered');
-          });
-    }; 
-
-  });
+  $scope.scheduleEveryMinuteNotification = function () {
+    $cordovaLocalNotification.schedule({
+      id: 3,
+      title: 'Warning',
+      text: 'Dont fall asleep',
+      every: 'minute'
+    }).then(function (result) {
+      console.log('Notification 3 triggered');
+    });
+  };
 
   $scope.refreshOrders = function () {
     dbService.getAllOrders().then(function(data){
@@ -180,13 +178,8 @@ angular.module('starter.controllers', [])
   };
 
   $scope.goToDetail = function (order) {
-<<<<<<< HEAD
     $state.go('tab.order-detail', {orderId: order.ID});
-  }
-=======
-    $state.go('tab.order-detail', {order: JSON.stringify(order)});
   };
->>>>>>> 1041757569b84dfa1f38054a9e72dae2b789ab7b
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
