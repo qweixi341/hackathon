@@ -104,7 +104,7 @@ angular.module('starter.controllers', [])
             }, function(error) {
                 alert(error);
             });
-    }
+    };
 
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
