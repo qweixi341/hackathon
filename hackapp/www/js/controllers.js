@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($scope, $state, $stateParams, Orders) {
+.controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, Orders, dbService, localStorageService) {
 
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
@@ -16,12 +16,23 @@ angular.module('starter.controllers', [])
   $scope.confirmBuy = function() {
     console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
-    console.log(expiry);
-    
-    Orders.create({
-      vendor: $scope.selectedVendor,
-      expiry: expiry
+    console.log(expiry);    
+    _init = localStorageService.get("__username");
+    $log.debug(_init);
+    dbService.getAllOrdersLength().then(function(data) {  
+      _addID = data.result;
+      dbService.setOrder(["orders/" + _addID, {
+        Init: _init, 
+        Vendor: $scope.selectedVendor, 
+        ExpriyTime : expiry,
+        Bids: {}
+      }]);   
     });
+    var alertPopup = $ionicPopup.alert({
+        title : 'Success',
+        template : 'You have successfully created an order.'
+    });
+    $state.go('tab.orders');
   };
 
 })
@@ -72,6 +83,7 @@ angular.module('starter.controllers', [])
 
 
   $scope.orders = Orders.all();
+  $scope.myorders = Orders.getMyOrder();
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, Orders, dbService, $log) {

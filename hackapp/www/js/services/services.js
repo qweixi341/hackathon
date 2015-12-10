@@ -74,7 +74,7 @@ angular.module('starter.services', ['firebase'])
   };
 })
 
-.factory('Orders', function(dbService, $log, $firebaseObject) {
+.factory('Orders', function(localStorageService, dbService, $log, $firebaseObject) {
   // Might use a resource here that returns a JSON array
   // Below data would be extend after grabbing from Firebase
 
@@ -102,7 +102,7 @@ angular.module('starter.services', ['firebase'])
   if(initSite)
   {
     dbService.setOrder(["orders/0", {
-      Init:'Weixi', 
+      Init:'Peter', 
       Vendor:'YaKun', 
       Bids: {
         0: {guestName:"Ming Xia",   Message:"I want a soda can of Sprite."},
@@ -127,7 +127,7 @@ angular.module('starter.services', ['firebase'])
       Bids: {
         0: {guestName:"Ming Xia",   Message:"I want a soda can of Sprite."},
         1: {guestName:"Peter Tang", Message:"Can I have a kopi?"},
-        2: {guestName:"Zhang Jiao", Message:"I would like to have a big cup of Teh-O."},
+        2: {guestName:"Weixi", Message:"I would like to have a big cup of Teh-O."},
         3: {guestName:"Xie Lekai",  Message:"I am so hungry, can you bring me a sandwich?"},
       }
     }]);
@@ -145,46 +145,46 @@ angular.module('starter.services', ['firebase'])
   
   dbService.setBids(["1" ,"1", {guestName:"New Bider", Message:"I want this to work."}]);
   var orders = [];
+  var myorders = [];
   dbService.getAllOrders().then(function(data) {    
-    loopObject(data.result);
+    //loopObject(data.result);
     
     var id = 0;
     angular.forEach(data.result, function(value, key) {
+      var bool_myorder = false;
+      var _username = localStorageService.get("__username");
       if(value.Init!= "")
       {
-        orders.push({id:id,name:value.Init,lastText:value.Vendor,face: imageDict[value.Vendor.toLowerCase()]})        
+        orders.push({id:id,name:value.Init,lastText:value.Vendor,face: imageDict[value.Vendor.toLowerCase()]});
+      }
+      //known issue: we assume that each user can only be in one order either as initiator or bider
+      //todo: below Weixi is hardcoded and should be edited to dynamic value
+      if(value.Init==_username)
+      {
+        bool_myorder=true;
+      }
+      else
+      {
+        if(typeof(value) == "object"){
+          angular.forEach(value, function(value, key) {
+            if(typeof(value) == "object"){
+              angular.forEach(value, function(value, key) {               
+                if(value.guestName ==_username)
+                  bool_myorder=true;
+                  return false;
+              });            
+            }
+          });
+        }
+      }
+      if(bool_myorder)
+      {
+        myorders.push({id:id,name:value.Init,lastText:value.Vendor,face: imageDict[value.Vendor.toLowerCase()]});
+        //$log.debug(myorders);
       }
       id = id + 1;
     });
   });
- 
-
-  // var orders = [{
-  //   id: 0,
-  //   name: 'This is username',
-  //   lastText: 'Current bids: 4',
-  //   face: 'img/YaKun.png'
-  // }, {
-  //   id: 1,
-  //   name: 'Max Lynx',
-  //   lastText: 'Hey, it\'s me',
-  //   face: 'img/sumosalad.jpg'
-  // }, {
-  //   id: 2,
-  //   name: 'Adam Bradleyson',
-  //   lastText: 'I should buy a boat',
-  //   face: 'img/starbucks.png'
-  // }, {
-  //   id: 4,
-  //   name: 'Adam Bradleyson',
-  //   lastText: 'I should buy a boat',
-  //   face: 'img/SoupSpoon.png'
-  // }, {
-  //   id: 5,
-  //   name: 'Adam Bradleyson',
-  //   lastText: 'I should buy a boat',
-  //   face: 'img/SaladStop.jpg'
-  // }];
 
   return {
     all: function() {
@@ -197,7 +197,10 @@ angular.module('starter.services', ['firebase'])
         }
       }
       return null;
-    }
+    },
+    getMyOrder: function() {
+       return myorders;
+    },
   };
 });
 
