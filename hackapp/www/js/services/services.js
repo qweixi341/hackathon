@@ -105,6 +105,7 @@ angular.module('starter.services', ['firebase'])
       ID: 0,
       Init:'Peter', 
       Vendor:'YaKun', 
+      ReadyForCollection : 'true',
       Bids: {
         0: {guestName:"Ming Xia",   Message:"I want a soda can of Sprite."},
         1: {guestName:"Peter Tang", Message:"Can I have a kopi?"},

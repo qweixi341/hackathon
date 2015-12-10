@@ -16,8 +16,7 @@ angular.module('starter.controllers', [])
   $scope.confirmBuy = function() {
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
     console.log(expiry);    
-    _init = localStorageService.get("__username");
-
+    _init = localStorageService.get("__username")
     $log.debug(_init);
     dbService.getAllOrdersID().then(function(data) {  
       _addID = data.result;
@@ -26,6 +25,7 @@ angular.module('starter.controllers', [])
         Init: _init, 
         Vendor: $scope.selectedVendor, 
         ExpriyTime : expiry,
+        ReadyForCollection : false,
         Bids: {}
       }]);   
     });
