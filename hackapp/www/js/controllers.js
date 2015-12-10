@@ -227,6 +227,7 @@ angular.module('starter.controllers', [])
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
+    $scope.refreshData();
   });
 
   $scope.order = {};
