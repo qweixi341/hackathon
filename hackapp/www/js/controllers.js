@@ -96,16 +96,6 @@ angular.module('starter.controllers', [])
   });
 
   $ionicPlatform.ready(function () {      
-    $cordovaBadge.promptForPermission();
- 
-    $scope.setBadge = function(value) {
-            $cordovaBadge.hasPermission().then(function(result) {
-                $cordovaBadge.set(value);
-            }, function(error) {
-                alert(error);
-            });
-    };
-
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
         id: 1,
@@ -181,8 +171,6 @@ angular.module('starter.controllers', [])
   $scope.goToDetail = function (order) {
     $state.go('tab.order-detail', {order: JSON.stringify(order)});
   };
-
-  $scope.setBadge(5);
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state,
