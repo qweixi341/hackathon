@@ -5,7 +5,7 @@ angular.module('starter.services', ['firebase'])
     {
       id: 1,
       name: 'Starbucks',
-      thumbnail: 'img/starbucks.png'
+      thumbnail: 'img/Starbucks.png'
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ angular.module('starter.services', ['firebase'])
     {
       id: 8,
       name: 'Tuck Shop',
-      thumbnail: 'img/TuckShop.jpg'
+      thumbnail: 'img/TuckShop.JPG'
     },    
     {
       id: 9,
