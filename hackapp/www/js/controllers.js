@@ -14,10 +14,10 @@ angular.module('starter.controllers', [])
   };
 
   $scope.confirmBuy = function() {
-    console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
     console.log(expiry);    
     _init = localStorageService.get("__username");
+
     $log.debug(_init);
     dbService.getAllOrdersLength().then(function(data) {  
       _addID = data.result;
@@ -108,9 +108,12 @@ angular.module('starter.controllers', [])
                 localStorageService.get('__seat') : '';
 
   $scope.updateSeat = function(seat){
-    console.log('Updated seat number is ', seat);
     localStorageService.set('__seat', seat);
     $scope.seat = seat;
+  };
+
+  $scope.logout = function() {
+
   };
 })
 
