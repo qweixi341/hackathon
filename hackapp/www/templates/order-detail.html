@@ -17,8 +17,8 @@
   <ion-content class="padding">
   <img ng-src="{{order.face}}" style="width: 64px; height: 64px">
   <ion-list>
-    <ion-item ng-repeat="user in users ">
-      {{user.name}} : {{user.comment}}!
+    <ion-item ng-repeat="bid in bids ">
+      {{bid.guestName}} : {{bid.Message}}!
     </ion-item>
   </ion-list>
   <label class="item item-input">

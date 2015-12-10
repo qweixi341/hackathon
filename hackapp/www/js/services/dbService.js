@@ -26,7 +26,7 @@ angular.module('starter.services')
         {
 
           $log.debug("We are here");
-          var ref = new Firebase("https://kopiteh.firebaseio.com/orders/" + id);  
+          var ref = new Firebase("https://kopiteh.firebaseio.com/orders/" + id  + "/Bids");  
           var returnObj = $firebaseObject(ref);
           var deferred = $q.defer();
           try {
