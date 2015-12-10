@@ -155,9 +155,10 @@ angular.module('starter.controllers', [])
     dbService.getAllOrders().then(function(data){
       console.log("received, ", data.result);
 
-      $scope.orders = data.result.reverse();
-
-      data.result.map(function(order) {
+      //$scope.orders = data.result.reverse();
+      for(var x in data.result) {
+        var order = data.result[x];
+        $scope.orders.push(order);
         for(var i in $scope.myOrders) {
           if($scope.myOrders[i].ID == order.ID){
             console.log('exist');
@@ -173,7 +174,29 @@ angular.module('starter.controllers', [])
               $scope.myOrders.push(order);
           });
         }
-      });
+        if($scope.order)
+          $scope.order.reverse();
+        if($scope.myOrders)
+          $scope.myOrders.reverse();
+      }
+
+      // data.result.map(function(order) {
+      //   for(var i in $scope.myOrders) {
+      //     if($scope.myOrders[i].ID == order.ID){
+      //       console.log('exist');
+      //       return;
+      //     }
+      //   }
+      //   if (order.Init === _username) {
+      //     $scope.myOrders.push(order);
+      //   }
+      //   else if (typeof order.Bids !== 'undefined') {
+      //     order.Bids.map(function(bid) {
+      //       if(bid.guestName === _username)
+      //         $scope.myOrders.push(order);
+      //     });
+      //   }
+      // });
     });
 
     $timeout(function() {
