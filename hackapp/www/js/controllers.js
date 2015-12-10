@@ -313,15 +313,16 @@ angular.module('starter.controllers', [])
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
-    $scope.refreshData().then(function (data){
-        $log.debug('Notification' + $scope.order.ReadyForCollection);
-        if($scope.order.ReadyForCollection == "true")
-        {
-          $log.debug('setting Notification');
-          $scope.setBadge(1);
-          $scope.scheduleSingleNotification();
-        }
-
+    dbService.getOrderdetail($scope.order.ID).then(function(data) {  
+      var _ReadyForCollection = data.result.ReadyForCollection;        
+      $log.debug('Notification' + _ReadyForCollection);
+      if(_ReadyForCollection)
+      {
+        $log.debug('setting Notification');
+        $scope.setBadge(1);
+        $scope.scheduleSingleNotification();
+      }
+      $scope.refreshData();
     });
 
 
@@ -342,8 +343,7 @@ angular.module('starter.controllers', [])
 
   $scope.refreshData = function() {
     dbService.getOrderdetail($stateParams.orderId)
-      .then(function (data) {
-        var deferred = $q.defer();
+      .then(function (data) {        
         console.log('dbservice, ', data);
         $scope.order = data.result;
         $scope.bids = data.result.Bids;
@@ -381,9 +381,7 @@ angular.module('starter.controllers', [])
           $scope.eligible = localEligible;
         } else if (!$scope.bids) {
           $scope.eligible = true;
-        }
-        deferred.resolve();
-        return deferred.promise;
+        }        
     }); //end of getOrderDetail
 
   }; 
