@@ -2,7 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('BuyCtrl', function($scope, $state, $stateParams, Orders) {
 
-  console.log('refresh');
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
   $scope.selectedTimeDisplay = $stateParams.timeout ? 'In ' + $stateParams.timeout + ' minutes' : '';
@@ -53,7 +52,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, Orders) {
+.controller('OrdersCtrl', function($scope, Orders, $timeout) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -61,6 +60,16 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+  
+  $scope.refreshOrders = function ()
+  {
+    $scope.orders = Orders.all();
+    $timeout(function() {
+        $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
+
+
 
   $scope.orders = Orders.all();
   $scope.myorders = Orders.getMyOrder();

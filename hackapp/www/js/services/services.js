@@ -3,11 +3,6 @@ angular.module('starter.services', ['firebase'])
 .factory('Vendors', function() {
   var vendors = [
     {
-      id: 0,
-      name: 'SaladStop',
-      thumbnail: 'img/SaladStop.jpg'
-    },
-    {
       id: 1,
       name: 'Starbucks',
       thumbnail: 'img/starbucks.png'
@@ -17,21 +12,7 @@ angular.module('starter.services', ['firebase'])
       name: 'Ya Kun 亚坤',
       thumbnail: 'img/YaKun.png'
     },
-    {
-      id: 3,
-      name: 'The Soup Spoon',
-      thumbnail: 'img/SoupSpoon.png'
-    },    
-    {
-      id: 4,
-      name: 'Sumo Salad',
-      thumbnail: 'img/sumosalad.jpg'
-    },
-    {
-      id: 5,
-      name: 'Apples&oranges',
-      thumbnail: 'img/apples&oranges.jpg'
-    }, 
+   
     {
       id: 6,
       name: 'Bakersfield',
@@ -42,11 +23,7 @@ angular.module('starter.services', ['firebase'])
       name: 'Bread yard',
       thumbnail: 'img/bread yard.jpg'
     },
-    {
-      id: 8,
-      name: 'Chillas',
-      thumbnail: 'img/Chillas.jpg'
-    },
+    
     {
       id: 9,
       name: 'Coffee Hive',
@@ -72,26 +49,12 @@ angular.module('starter.services', ['firebase'])
       name: 'Kettle Pot',
       thumbnail: 'img/Kettle Pot.jpg'
     },
-    {
-      id: 14,
-      name: 'Mixed Grill',
-      thumbnail: 'img/Mixed Grill.jpg'
-    },
+    
     {
       id: 15,
       name: 'One Man Coffee',
       thumbnail: 'img/One Man Coffee.jpg'
-    },
-    {
-      id: 16,
-      name: 'PitaPit',
-      thumbnail: 'img/PitaPit.jpg'
-    },
-    {
-      id: 17,
-      name: 'The Daily Cut',
-      thumbnail: 'img/The Daily Cut.jpg'
-    },             
+    }           
   ];
 
   vendors.sort(function(a, b){
