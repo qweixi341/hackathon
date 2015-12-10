@@ -1,21 +1,23 @@
-<ion-view view-title="Buy">
+<ion-view view-title="New Order" hide-back-button="true">
   <ion-content>
     <ion-list>
         <ion-item 
           class="item-remove-animate item-avatar item-icon-right" 
-          type="item-text-wrap" href="#/tab/buy/vendors">
-          <h2>Select Vendor</h2>
+          type="item-text-wrap" ng-click="goBuyVendors()">
+          <h2>Store to visit</h2>
+          <p>{{selectedVendor}}</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
         <ion-item 
           class="item-remove-animate item-avatar item-icon-right" 
-          type="item-text-wrap" href="#/tab/buy/time">
-          <h2>Select Time</h2>
+          type="item-text-wrap" ng-click="goBuyTime()">
+          <h2>Expiry time</h2>
+          <p>{{selectedTimeDisplay}}</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
 
       </ion-list>
-      <button class="button button-block button-positive">
+      <button ng-click="confirmBuy()" class="button button-block button-positive">
         Confirm
       </button>
   </ion-content>

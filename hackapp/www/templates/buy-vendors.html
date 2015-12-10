@@ -1,9 +1,13 @@
-<ion-view view-title="Buy">
+<ion-view view-title="Store to visit">
   <ion-content>
    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="vendor in vendors" type="item-text-wrap">
-        <a>{{vendor.name}}</a>
+      <ion-item 
+        class="item-remove-animate item-avatar item-icon-left" 
+        ng-repeat="vendor in vendors" 
+        ng-click="selectVendor(vendor.name)"
+        type="item-text-wrap">    
         <img class='vendor' ng-src="{{vendor.thumbnail}}">
+        <a>{{vendor.name}}</a>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -1,33 +1,49 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($scope, $state, Vendors) {
+.controller('BuyCtrl', function($scope, $state, $stateParams, Orders) {
 
-  // var hasPendingOrder = localStorageService.get('hasPendingOrder');
-  // if(hasPendingOrder) {
-  //   $state.go('tab/buy/summary');
-  // }
-  var selectedVendor;
-  var selectedTime;
+  console.log('refresh');
+  $scope.selectedVendor = $stateParams.vendor;
+  $scope.selectedTime = $stateParams.timeout;
+  $scope.selectedTimeDisplay = $stateParams.timeout ? 'In ' + $stateParams.timeout + ' minutes' : '';
 
-  $scope.vendors = Vendors.all();
-
-  $scope.selectVendor = function(id) {
-    selectedVendor = id;
-    $state.go('tab.buy');
+  $scope.goBuyVendors = function() {
+    $state.go('tab.buy-vendors', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
   };
-
-  $scope.selectTime = function(time) {
-    selectedTime = time;
-    $state.go('tab.buy');
+  $scope.goBuyTime = function() {
+    $state.go('tab.buy-time', {vendor: $scope.selectedVendor, timeout: $scope.selectedTime });
   };
 
   $scope.confirmBuy = function() {
-    if(typeof selectedTime === 'undefined'
-      || typeof selectedTime === 'undefined'){
-      return;
-    }
+    console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
+    var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
+    console.log(expiry);
+    
+    Orders.create({
+      vendor: $scope.selectedVendor,
+      expiry: expiry
+    });
   };
 
+})
+
+.controller('VendorCtrl', function($scope, $state, $stateParams, Vendors) {
+
+  $scope.vendors = Vendors.all();
+
+  $scope.selectVendor = function(name) {
+    console.log('selectVendor, ', name);
+    $state.go('tab.buy', {vendor : name, timeout : $stateParams.timeout});
+  };
+})
+
+.controller('TimeoutCtrl', function($scope, $state, $stateParams) {
+
+  $scope.selectTime = function(time) {
+    $scope.selectedTime = time;
+    console.log('selectTime, ', time);
+    $state.go('tab.buy', {vendor : $stateParams.vendor, timeout : time});
+  };
 })
 
 .config(function($ionicConfigProvider) {
@@ -53,10 +69,16 @@ angular.module('starter.controllers', [])
   $scope.order = Orders.get($stateParams.orderId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+.controller('AccountCtrl', function($scope,localStorageService) {
+
+  $scope.owner = localStorageService.get('__username');
+  $scope.getSeat = localStorageService.get('__seat');
+
+  $scope.seat = function(seat){
+    localStorageService.set('__seat');
+    $scope.seat = seat;
   };
+  
 })
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
@@ -77,4 +99,4 @@ angular.module('starter.controllers', [])
   $scope.login = function() {     
       loginService.loginUser($scope.data.username, $scope.data.password);
   };
-})
+});
