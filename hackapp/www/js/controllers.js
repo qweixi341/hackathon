@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
   $log.debug($scope.bids);
 })
 
-.controller('AccountCtrl', function($scope,localStorageService) {
+.controller('AccountCtrl', function($scope,localStorageService, $state) {
 
   $scope.owner = localStorageService.get('__username') ? 
                  localStorageService.get('__username')  : '';
@@ -156,9 +156,12 @@ angular.module('starter.controllers', [])
     $scope.seat = seat;
   };
 
-  $scope.logout = function() {
-
+  $scope.logout = function(){
+    localStorageService.set('__username','');
+    localStorageService.set('__JWT','');
+    $state.go('login');
   };
+
 })
 
 .controller('MapCtrl', function($scope, $stateParams, localStorageService) {
@@ -182,7 +185,7 @@ angular.module('starter.controllers', [])
   var _JWT = localStorageService.get('__JWT');     
   jwtParserService.parseJWTclaim(_JWT)    
   .success(function(data)
-    {   
+  {   
       $log.debug("User has already logged in.");
       $state.go('tab.orders');
   })
@@ -193,4 +196,6 @@ angular.module('starter.controllers', [])
   $scope.login = function() {     
       loginService.loginUser($scope.data.username, $scope.data.password);
   };
-});
+
+
+})
