@@ -49,7 +49,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
   .state('tab.order-detail', {
-    url: '/orders/:orderId',
+    url: '/orders/:order',
     views: {
       'tab-orders': {
         templateUrl: 'templates/order-detail.html',
