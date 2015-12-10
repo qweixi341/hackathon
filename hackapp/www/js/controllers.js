@@ -143,7 +143,8 @@ angular.module('starter.controllers', [])
   $scope.refreshOrders = function () {
     dbService.getAllOrders().then(function(data){
       console.log("received, ", data.result);
-      $scope.orders = data.result;
+
+      $scope.orders = data.result.reverse();
 
       data.result.map(function(order) {
         for(var i in $scope.myOrders) {
@@ -201,7 +202,7 @@ angular.module('starter.controllers', [])
 
 
   var _username = localStorageService.get("__username");
-  $scope.eligible = true;
+  $scope.eligible = false;
   $scope.owner = false;
 
   $scope.refreshData = function() {
@@ -220,28 +221,30 @@ angular.module('starter.controllers', [])
       } else {
         var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
         var secondsLeft = parseInt(seconds % 86400 % 3600 % 60);
-        $scope.timerString = minutesLeft + ':' + secondsLeft;
+        $scope.timerString = (minutesLeft < 10 ? '0' + minutesLeft : minutesLeft)
+          + ':'
+          + (secondsLeft < 10 ? '0' + secondsLeft : secondsLeft)
       }
     };
-      setInterval(function () {
+    setInterval(function () {
       $scope.$apply(updateClock);
       }, 1000);
-      updateClock();
+
+    updateClock();
+
       if($scope.order.Init === _username) { 
-        $scope.eligible = false;
         $scope.owner = true;
       }
-      else if ($scope.bids) {
-        if ($scope.bids.length > 5) {
-          $scope.eligible = false;
-        }
-        else {
-          for(var i in $scope.bids) {
-            if($scope.bids[i].guestName === _username) {
-              $scope.eligible = false;
-            }
+      else if ($scope.bids && $scope.bids.length <= 3) {
+        var localEligible = true;
+        for(var i in $scope.bids) {
+          if($scope.bids[i].guestName === _username) {
+            localEligible = false;
           }
         }
+        $scope.eligible = localEligible;
+      } else if (!$scope.bids) {
+        $scope.eligible = true;
       }
     });
 
