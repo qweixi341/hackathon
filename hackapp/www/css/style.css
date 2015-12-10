@@ -261,3 +261,8 @@ ion-scroll.nobgcolor {
   margin-top: 50px;
   margin-left: 25%;
 }
+
+.logout_right_align{
+	position: absolute;
+	right: 10px;
+}
