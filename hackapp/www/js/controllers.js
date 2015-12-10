@@ -281,7 +281,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MapCtrl', function($scope, $stateParams, localStorageService, $locationProvider) {
+.controller('MapCtrl', function($scope, $stateParams, localStorageService) {
 
   $scope.floor = $stateParams.mapId;
   console.log("Selected map is ", $scope.floor);
