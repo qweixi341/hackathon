@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($log, $scope, $state, $stateParams, $ionicPopup, dbService, localStorageService) {
+.controller('BuyCtrl', function($ionicViewService, $log, $scope, $state, $stateParams, $ionicPopup, dbService, localStorageService) {
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
   $scope.selectedPantry = $stateParams.pantry;
@@ -27,6 +27,7 @@ angular.module('starter.controllers', [])
         Init: _init, 
         Vendor: $scope.selectedVendor, 
         ExpriyTime : expiry,
+        Pantry: $scope.selectedPantry,
         ReadyForCollection : false,
         Pantry: $scope.selectedPantry,
         Bids: {}
@@ -36,6 +37,7 @@ angular.module('starter.controllers', [])
         title : 'Success',
         template : 'You have successfully created an order.'
     });
+    $ionicViewService.clearHistory();
     $state.go('tab.orders');
   };
   // $scope.$on('$ionicView.enter', function(e) {
@@ -190,7 +192,7 @@ angular.module('starter.controllers', [])
             });
           }
         }
-        
+
         if($scope.orders)
           $scope.orders.reverse();
         if($scope.myOrders)
