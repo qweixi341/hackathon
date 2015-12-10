@@ -156,24 +156,39 @@ angular.module('starter.controllers', [])
       //$scope.orders = data.result.reverse();
       for(var x in data.result) {
         var order = data.result[x];
-        $scope.orders.push(order);
-        for(var i in $scope.myOrders) {
-          if($scope.myOrders[i].ID == order.ID){
-            console.log('exist');
-            return;
+
+        var existing = false;
+        for(var i in $scope.orders) {
+          if($scope.orders[i].ID == order.ID){
+            existing = true;
+            break;
           }
         }
-        if (order.Init === _username) {
-          $scope.myOrders.push(order);
+        if(!existing)
+          $scope.orders.push(order);
+
+
+        existing = false;
+        for(var i in $scope.myOrders) {
+          if($scope.myOrders[i].ID == order.ID){
+            existing = true;
+            break;
+          }
         }
-        else if (typeof order.Bids !== 'undefined') {
-          order.Bids.map(function(bid) {
-            if(bid.guestName === _username)
-              $scope.myOrders.push(order);
-          });
+        if (!existing) {
+          if (order.Init === _username) {
+            $scope.myOrders.push(order);
+          }
+          else if (typeof order.Bids !== 'undefined') {
+            order.Bids.map(function(bid) {
+              if(bid.guestName === _username)
+                $scope.myOrders.push(order);
+            });
+          }
         }
-        if($scope.order)
-          $scope.order.reverse();
+        
+        if($scope.orders)
+          $scope.orders.reverse();
         if($scope.myOrders)
           $scope.myOrders.reverse();
       }
@@ -222,12 +237,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService, $firebaseObject) {
+  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup) {
 
   var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
+    $scope.refreshData();
   });
 
   $scope.order = {};
@@ -290,8 +306,16 @@ angular.module('starter.controllers', [])
   }; 
 
   console.log($scope.bids);
-  
+  $scope.newOrder = '';
   $scope.placeOrder = function(msg) {
+    if ('' == msg)
+    {
+      var alertPopup = $ionicPopup.alert({
+        template : 'Order cannot be empty!'
+      });
+      return;
+    }
+
     var bidParams = [];
     bidParams.push($scope.order.ID);
     bidParams.push($scope.bids ? $scope.bids.length : 0);
