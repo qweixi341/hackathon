@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, Orders, $timeout, $cordovaLocalNotification, $ionicPlatform) {
+.controller('OrdersCtrl', function($ionicLoading, $scope, Orders, $timeout, $cordovaLocalNotification, $ionicPlatform) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -72,7 +72,23 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-  
+  $scope.showLoading = function(loadAnimationDuration) {
+    $ionicLoading.show({
+      duration : loadAnimationDuration,
+      noBackdrop : true,
+      template : '<p class="item-icon-left">Loading...<ion-spinner icon="bubbles"/></p>'
+    });
+  };
+
+  $scope.$on('$stateChangeSuccess', function(event, toState) {
+
+    //only load for searchBook state
+    if (toState.name == 'tab.orders') {      
+      $scope.showLoading(1500);
+      $scope.refreshOrders();
+    }
+  });
+
   $ionicPlatform.ready(function () {       
         $scope.scheduleSingleNotification = function () {
           $cordovaLocalNotification.schedule({
