@@ -264,6 +264,14 @@ angular.module('starter.controllers', [])
     dbService.setBids(bidParams);
     setTimeout($scope.refreshData, 500);
   };
+
+  $scope.collect = function() {
+    dbService.getOrderdetail($scope.order.ID).then(function(data) {  
+      var newState = data.result;
+      newState.ReadyForCollection = true;
+      dbService.setOrder(["orders/" + $scope.order.ID, newState]);   
+    });
+  };
 })
 
 .controller('AccountCtrl', function($scope,localStorageService, $state) {
