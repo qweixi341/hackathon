@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, $ionicLoading, $timeout, Vendors,
+.controller('OrdersCtrl', function($scope, $ionicLoading, $timeout, Vendors, $state,
   $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
 
 
