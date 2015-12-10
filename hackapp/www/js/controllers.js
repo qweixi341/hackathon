@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BuyCtrl', function($scope, $state, $stateParams, Orders) {
+.controller('BuyCtrl', function($scope, $state, $stateParams, Orders, dbService, localStorageService) {
 
   $scope.selectedVendor = $stateParams.vendor;
   $scope.selectedTime = $stateParams.timeout;
@@ -16,12 +16,14 @@ angular.module('starter.controllers', [])
   $scope.confirmBuy = function() {
     console.log($scope.selectedVendor, ' + ', $scope.selectedTime);
     var expiry = moment().add(parseInt($scope.selectedTime), 'minutes').format();
-    console.log(expiry);
-    
-    Orders.create({
-      vendor: $scope.selectedVendor,
-      expiry: expiry
-    });
+    console.log(expiry);    
+    _init = localStorageService.get(__username);
+    $log.debug(_init);
+    // dbService.setOrder(["orders/2", {
+    //   Init:'Siyuan', 
+    //   Vendor:'SoupSpoon', 
+    //   Bids: {}
+    // }]);    
   };
 
 })
