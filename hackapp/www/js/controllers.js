@@ -342,10 +342,10 @@ angular.module('starter.controllers', [])
   $scope.owner = localStorageService.get('__username');
   $scope.seat = localStorageService.get('__seat');
 
-  $scope.updateSeat = function(seat){
-    localStorageService.set('__seat', seat);
-    $scope.seat = seat;
-  };
+  // $scope.updateSeat = function(seat){
+  //   localStorageService.set('__seat', seat);
+  //   $scope.seat = seat;
+  // };
 
   $scope.logout = function(){
     localStorageService.set('__username','');
