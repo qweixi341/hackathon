@@ -190,7 +190,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService) {
+  , dbService, $log, localStorageService, $firebaseObject) {
+
+  var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
+  var obj = $firebaseObject(ref);
+  var unwatch = obj.$watch(function() {
+    $log.debug("data has changed!");
+  });
 
   $scope.order = {};
   $scope.bids = $scope.order.Bids;
@@ -219,6 +225,7 @@ angular.module('starter.controllers', [])
           var timeRemaining = moment($scope.order.ExpriyTime) - moment();
           var seconds = timeRemaining / 1000;
           if (seconds <= 0) {
+            $scope.eligible = false;
             $scope.timerString = 'Order Expired!';
           } else {
             var minutesLeft = parseInt(seconds % 86400 % 3600 / 60);
