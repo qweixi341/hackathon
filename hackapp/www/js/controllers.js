@@ -221,7 +221,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService, $firebaseObject) {
+  , dbService, $log, localStorageService, $firebaseObject, $ionicPopup) {
 
   var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
   var obj = $firebaseObject(ref);
@@ -290,8 +290,16 @@ angular.module('starter.controllers', [])
   }; 
 
   console.log($scope.bids);
-  
+  $scope.newOrder = '';
   $scope.placeOrder = function(msg) {
+    if ('' == msg)
+    {
+      var alertPopup = $ionicPopup.alert({
+        template : 'Order cannot be empty!'
+      });
+      return;
+    }
+
     var bidParams = [];
     bidParams.push($scope.order.ID);
     bidParams.push($scope.bids ? $scope.bids.length : 0);
