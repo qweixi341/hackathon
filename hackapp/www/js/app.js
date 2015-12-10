@@ -65,7 +65,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
   })
 
   .state('tab.buy', {
-    url: '/buy?vendor&timeout',
+    url: '/buy?vendor&timeout&pantry',
     views: {
       'tab-buy': {
         templateUrl: 'templates/tab-buy.html',
@@ -74,7 +74,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
   .state('tab.buy-vendors', {
-    url: '/buy/vendors/:timeout',
+    url: '/buy/vendors?timeout&pantry',
     views: {
       'tab-buy': {
         templateUrl: 'templates/buy-vendors.html',
@@ -83,7 +83,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
   .state('tab.buy-time', {
-    url: '/buy/time/:vendor',
+    url: '/buy/time?vendor&pantry',
     views: {
       'tab-buy': {
         templateUrl: 'templates/buy-time.html',
@@ -91,7 +91,15 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
       }
     }
   })
-
+  .state('tab.buy-pantry', {
+    url: '/buy/pantry?vendor&timeout',
+    views: {
+      'tab-buy': {
+        templateUrl: 'templates/buy-pantry.html',
+        controller: 'PantryCtrl'
+      }
+    }
+  })
   .state('tab.info', {
     url: '/info',
     views: {
