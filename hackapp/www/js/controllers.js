@@ -117,7 +117,15 @@ angular.module('starter.controllers', [])
 .controller('MapCtrl', function($scope, $stateParams, localStorageService) {
 
   $scope.floor = $stateParams.mapId;
-  console.log($scope.floor);
+  console.log("Selected map is ", $scope.floor);
+  $scope.getMapImg = function(){
+    if (6 == $scope.floor)
+      return "img/ADSK_L6-locationplan.png";
+    else if (5 == $scope.floor)
+      return "img/ADSK_L5-locationplan.png";
+    else
+      return "img/ADSK_L4-locationplan.png";
+  };
 })
 
 .controller('LoginCtrl', function($scope, $log, $state, loginService, localStorageService, jwtParserService) {
