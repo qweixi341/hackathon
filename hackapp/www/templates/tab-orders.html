@@ -19,7 +19,7 @@
       <div class="bar bar-header item-input-inset">
         <ion-search placeholder="Search for your interested orders" filter="search"></ion-search>
       </div>
-
+      <div><button class="button button-full button-positive" ng-click="scheduleSingleNotification()"></button></div>
       <ion-item class="item-remove-animate item-avatar item-icon-right" 
                 ng-repeat="order in orders | filter:search.value"          
                 type="item-text-wrap" 
