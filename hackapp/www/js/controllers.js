@@ -247,7 +247,7 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams, $state
+.controller('OrderDetailCtrl', function($q, $scope, $stateParams, $state
   , dbService, $log, localStorageService, $firebaseObject, $ionicPopup, $cordovaLocalNotification, $cordovaBadge, $ionicPlatform) 
 {
   $ionicPlatform.ready(function () {      
@@ -307,7 +307,7 @@ angular.module('starter.controllers', [])
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
-    $scope.refreshData().then (function (data){
+    $scope.refreshData().then(function (data){
         $log.debug('Notification' + $scope.order.ReadyForCollection);
         if($scope.order.ReadyForCollection == "true")
         {
@@ -337,7 +337,7 @@ angular.module('starter.controllers', [])
   $scope.refreshData = function() {
     dbService.getOrderdetail($stateParams.orderId)
       .then(function (data) {
-
+        var deferred = $q.defer();
         console.log('dbservice, ', data);
         $scope.order = data.result;
         $scope.bids = data.result.Bids;
@@ -376,6 +376,8 @@ angular.module('starter.controllers', [])
         } else if (!$scope.bids) {
           $scope.eligible = true;
         }
+        deferred.resolve();
+        return deferred.promise;
     }); //end of getOrderDetail
 
   }; 
