@@ -190,8 +190,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, $state
-  , dbService, $log, localStorageService) {
+  , dbService, $log, localStorageService, $firebaseObject) {
 
+  var ref = new Firebase("https://kopiteh.firebaseio.com/orders");  
   var obj = $firebaseObject(ref);
   var unwatch = obj.$watch(function() {
     $log.debug("data has changed!");
