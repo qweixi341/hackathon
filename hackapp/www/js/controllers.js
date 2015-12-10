@@ -64,39 +64,70 @@ angular.module('starter.controllers', [])
   $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 })
 
-.controller('OrdersCtrl', function($scope, Orders, $timeout, $cordovaLocalNotification, $ionicPlatform) {
+.controller('OrdersCtrl', function($scope, Orders, $timeout, 
+  $cordovaLocalNotification, $ionicPlatform, localStorageService, dbService) {
+
+
+  var _username = localStorageService.get("__username");
+  $scope.myOrders = [];
+  $scope.orders = [];
+  var refresh = function() {
+    dbService.getAllOrders().then(function(data){
+      console.log("received, ", data.result);
+      $scope.orders = data.result;
+
+      data.result.map(function(order) {
+        for(var i in $scope.myOrders) {
+          if($scope.myOrders[i].ID == order.ID){
+            console.log('exist');
+            return;
+          }
+        }
+
+        if (order.Init === _username) {
+          $scope.myOrders.push(order);
+        }
+        else if (typeof order.Bids !== 'undefined') {
+          order.Bids.map(function(bid) {
+            if(bid.guestName === _username)
+              $scope.myOrders.push(order);
+          });
+        }
+      });
+    });
+  };
+  refresh();
+
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  $scope.$on('$ionicView.enter', function(e) {
+    refresh();
+  });
   
   $ionicPlatform.ready(function () {       
-        $scope.scheduleSingleNotification = function () {
-          $cordovaLocalNotification.schedule({
-            id: 1,
-            title: 'Warning',
-            text: 'Your order has arrived!',
-            data: {
-              customProperty: 'custom value'
-            }
-          }).then(function (result) {
-            console.log('Notification 1 triggered');
-          });
-        };
+    $scope.scheduleSingleNotification = function () {
+      $cordovaLocalNotification.schedule({
+        id: 1,
+        title: 'Warning',
+        text: 'Your order has arrived!',
+        data: {
+          customProperty: 'custom value'
+        }
+      }).then(function (result) {
+        console.log('Notification 1 triggered');
+      });
+    };
   });
-  $scope.refreshOrders = function ()
-  {
-    $scope.orders = Orders.all();
+
+  $scope.refreshOrders = function () {
+    refresh();
     $timeout(function() {
         $scope.$broadcast('scroll.refreshComplete');
     });
   }
-
-  $scope.orders = Orders.all();
-  $scope.myorders = Orders.getMyOrder();
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, Orders, dbService, $log) {
